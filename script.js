@@ -1,8 +1,9 @@
 // ======================================================
 // SAKURAI LP JavaScript
-// 軽量アニメーション・ヘッダー制御
+// ヘッダー制御・スクロールアニメーション
 // ======================================================
 
+// Header scroll effect
 const header = document.querySelector(".site-header");
 
 window.addEventListener("scroll", () => {
@@ -13,25 +14,27 @@ window.addEventListener("scroll", () => {
   }
 });
 
-const revealTargets = document.querySelectorAll(
-  ".section-heading, .reason-card, .flow-card, .building-grid div, .stat-card, .contact-form, .solution-card, .law-box"
+
+// Scroll reveal animation
+const revealItems = document.querySelectorAll(
+  ".law-box, .section-heading, .problem-grid, .reason-grid, .flow-grid, .cost-panel, .building-grid, .works-grid, .faq-grid, .contact-grid"
 );
 
-revealTargets.forEach((el) => {
-  el.classList.add("reveal");
+revealItems.forEach((item) => {
+  item.classList.add("reveal-item");
 });
 
-const observer = new IntersectionObserver(
-  (entries) => {
-    entries.forEach((entry) => {
-      if (entry.isIntersecting) {
-        entry.target.classList.add("is-visible");
-      }
-    });
-  },
-  {
-    threshold: 0.15,
-  }
-);
+const revealObserver = new IntersectionObserver((entries) => {
+  entries.forEach((entry) => {
+    if (entry.isIntersecting) {
+      entry.target.classList.add("is-visible");
+      revealObserver.unobserve(entry.target);
+    }
+  });
+}, {
+  threshold:0.14
+});
 
-revealTargets.forEach((el) => observer.observe(el));
+revealItems.forEach((item) => {
+  revealObserver.observe(item);
+});
