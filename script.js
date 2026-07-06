@@ -17,7 +17,7 @@ window.addEventListener("scroll", () => {
 
 // Scroll reveal animation
 const revealItems = document.querySelectorAll(
-  ".law-box, .section-heading, .problem-grid, .reason-grid, .flow-grid, .cost-panel, .building-grid, .works-grid, .faq-grid, .contact-grid"
+  ".law-box, .section-heading, .problem-grid, .problem-list li, .solution-card, .reason-heading, .reason-card, .reason-cta, .flow-layout, .flow-card, .cost-panel, .cost-info, .works-layout, .works-intro, .stat-card, .faq-grid, .contact-grid"
 );
 
 revealItems.forEach((item) => {
@@ -37,4 +37,49 @@ const revealObserver = new IntersectionObserver((entries) => {
 
 revealItems.forEach((item) => {
   revealObserver.observe(item);
+});
+
+// FAQ accordion animation
+document.querySelectorAll(".faq-grid details").forEach((details) => {
+  const summary = details.querySelector("summary");
+
+  summary.addEventListener("click", (event) => {
+    event.preventDefault();
+
+    if (details.dataset.animating === "true") return;
+    details.dataset.animating = "true";
+
+    const startHeight = `${details.offsetHeight}px`;
+
+    if (details.open) {
+      const endHeight = `${summary.offsetHeight}px`;
+      details.style.height = startHeight;
+
+      requestAnimationFrame(() => {
+        details.style.height = endHeight;
+        details.classList.add("is-closing");
+      });
+
+      window.setTimeout(() => {
+        details.open = false;
+        details.style.height = "";
+        details.classList.remove("is-closing");
+        details.dataset.animating = "false";
+      }, 320);
+      return;
+    }
+
+    details.open = true;
+    const endHeight = `${details.offsetHeight}px`;
+    details.style.height = startHeight;
+
+    requestAnimationFrame(() => {
+      details.style.height = endHeight;
+    });
+
+    window.setTimeout(() => {
+      details.style.height = "";
+      details.dataset.animating = "false";
+    }, 320);
+  });
 });
