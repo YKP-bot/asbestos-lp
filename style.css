@@ -57,6 +57,13 @@ a{text-decoration:none;color:inherit}
   background:linear-gradient(135deg,var(--navy),var(--teal));
   border-radius:12px;
 }
+.sakurai-logo-symbol{
+  display:block;
+  width:70%;
+  height:70%;
+  object-fit:contain;
+  mix-blend-mode:screen;
+}
 .logo small{display:block;font-size:11px;color:var(--muted);font-weight:500}
 .global-nav{display:flex;gap:24px;font-size:14px;font-weight:700;color:#334155}
 .header-tel{
@@ -687,6 +694,7 @@ linear-gradient(
 .reason-section{
   position:relative;
   overflow:hidden;
+  scroll-margin-top:52px;
   background:
     radial-gradient(circle at 82% 18%,rgba(19,181,170,.10),transparent 24%),
     linear-gradient(180deg,#f5fbff 0%,#ffffff 58%,#ffffff 100%);
@@ -1113,6 +1121,7 @@ linear-gradient(
 .cost-section{
   position:relative;
   overflow:hidden;
+  scroll-margin-top:104px;
   padding:52px 0 78px;
   margin-bottom:0;
   z-index:2;
@@ -1921,6 +1930,10 @@ details.is-closing p{
   font-weight:900;
   box-shadow:0 16px 34px rgba(0,0,0,.18);
 }
+.footer-logo .sakurai-logo-symbol{
+  width:68%;
+  height:68%;
+}
 .footer-logo strong{
   display:block;
   font-size:22px;
@@ -1998,10 +2011,17 @@ details.is-closing p{
   font-weight:900;
   box-shadow:0 16px 34px rgba(19,181,170,.22);
 }
+.footer-address{
+  grid-column:1/-1;
+  margin-top:2px;
+  color:#9fb8cd;
+  font-size:12px;
+  font-weight:700;
+}
 .footer-bottom{
   grid-column:1/-1;
   display:flex;
-  justify-content:space-between;
+  justify-content:flex-end;
   gap:18px;
   margin-top:4px;
   padding-top:22px;
@@ -2013,6 +2033,7 @@ details.is-closing p{
 .copyright{
   color:#9fb8cd;
   font-size:12px;
+  font-weight:500;
 }
 
 /* fixed cta */
@@ -2167,13 +2188,6 @@ details.is-closing p{
   追加調整：フォーム・余白・アニメーション
 ====================================================== */
 
-input[type="radio"]{
-  width:auto;
-  height:auto;
-  margin:0 8px 0 0;
-  accent-color:var(--teal);
-}
-
 .radio-group{
   display:flex;
   flex-wrap:wrap;
@@ -2188,36 +2202,6 @@ input[type="radio"]{
 .radio-group label{
   display:flex;
   align-items:center;
-}
-
-.contact-methods{
-  display:grid;
-  grid-template-columns:repeat(3,minmax(0,1fr));
-  gap:10px;
-}
-
-.contact-methods p{
-  grid-column:1/-1;
-}
-
-.contact-methods label{
-  justify-content:center;
-  margin:0;
-}
-
-.site-header.is-scrolled{
-  box-shadow:0 10px 30px rgba(11,47,79,.08);
-}
-
-.reveal{
-  opacity:0;
-  transform:translateY(28px);
-  transition:.7s ease;
-}
-
-.reveal.is-visible{
-  opacity:1;
-  transform:translateY(0);
 }
 
 .flow-card::after{
