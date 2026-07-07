@@ -2206,6 +2206,38 @@ details.is-closing p{
   align-items:center;
 }
 
+.contact-methods{
+  display:grid;
+  grid-template-columns:repeat(3,minmax(0,1fr));
+  gap:10px;
+  align-items:stretch;
+}
+
+.contact-methods p{
+  grid-column:1/-1;
+  width:auto;
+}
+
+.contact-methods label{
+  position:relative;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  min-width:0;
+}
+
+.contact-methods input[type="radio"]{
+  position:absolute;
+  opacity:0;
+  pointer-events:none;
+}
+
+.contact-methods label:has(input[type="radio"]:checked){
+  border-color:rgba(19,181,170,.52);
+  background:linear-gradient(135deg, rgba(19,181,170,.18), rgba(14,165,161,.1));
+  box-shadow:0 12px 26px rgba(19,181,170,.14);
+}
+
 .flow-card::after{
   display:none;
 }
