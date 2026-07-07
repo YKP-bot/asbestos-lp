@@ -417,20 +417,43 @@
     <section class="section contact-section" id="contact">
       <div class="container contact-grid">
         <div class="contact-copy">
-          <h2>アスベスト調査の<br />無料相談はこちら</h2>
-          <p>ご相談・お見積りは無料です。お気軽にお問い合わせください。</p>
+          <span class="section-kicker">CONTACT</span>
+          <h2>調査のこと、まずは<br />無料でご相談ください</h2>
+          <p>
+            建物の状況や工期が固まっていなくても大丈夫です。<br />
+            必要な調査範囲と進め方を、専門家が整理してご案内します。
+          </p>
+          <ul class="contact-benefits">
+            <li>調査が必要か確認できる</li>
+            <li>費用感と進め方が分かる</li>
+            <li>除去・解体まで続けて相談できる</li>
+          </ul>
+          <a class="contact-phone-card" href="tel:0120390186">
+            <span>お急ぎの方はお電話で</span>
+            <strong>0120-390-186</strong>
+          </a>
         </div>
 
         <form class="contact-form" action="send.php" method="post">
-          <label>会社名 <span>必須</span><input type="text" name="company" required /></label>
-          <label>ご担当者名 <span>必須</span><input type="text" name="name" required /></label>
-          <label>電話番号 <span>必須</span><input type="tel" name="tel" required /></label>
-          <label>メールアドレス <span>必須</span><input type="email" name="email" required /></label>
+          <div class="form-head">
+            <span>無料相談フォーム</span>
+          </div>
 
-          <label>
+          <div class="form-row">
+            <label class="contact-field">会社名 <span>必須</span><input type="text" name="company" required /><small>個人の方は「個人」とご入力ください</small></label>
+            <label class="contact-field">ご担当者名 <span>必須</span><input type="text" name="name" required /></label>
+          </div>
+
+          <div class="form-row">
+            <label class="contact-field">電話番号 <span>必須</span><input type="tel" name="tel" required /></label>
+            <label class="contact-field">メールアドレス <span>必須</span><input type="email" name="email" required /></label>
+          </div>
+
+          <label class="contact-field">
             建物の種類 <span>必須</span>
             <select name="building" required>
               <option value="">選択してください</option>
+              <option>戸建て住宅</option>
               <option>マンション・アパート</option>
               <option>オフィスビル・商業施設</option>
               <option>工場・プラント</option>
@@ -440,15 +463,69 @@
             </select>
           </label>
 
-          <div class="radio-group">
+          <div class="radio-group contact-methods">
             <p>ご希望の連絡方法 <span>必須</span></p>
-            <label><input type="radio" name="contact_method" value="電話" required /> 電話</label>
-            <label><input type="radio" name="contact_method" value="メール" /> メール</label>
-            <label><input type="radio" name="contact_method" value="どちらでも可" /> どちらでも可</label>
+            <label><input type="radio" name="contact_method" value="電話" required />電話</label>
+            <label><input type="radio" name="contact_method" value="メール" />メール</label>
+            <label><input type="radio" name="contact_method" value="どちらでも可" />どちらでも可</label>
           </div>
 
-          <button type="submit">無料相談する</button>
-          <small>ご入力いただいた個人情報は、お問い合わせへの回答目的で利用します。</small>
+          <label class="contact-field">
+            ご相談内容
+            <textarea name="message" placeholder="建物の状況、工期、調査したい範囲など分かる範囲でご入力ください。"></textarea>
+          </label>
+
+          <div class="privacy-box">
+            <div class="privacy-title">プライバシーポリシー</div>
+            <div class="privacy-scroll" tabindex="0">
+              <p>
+                株式会社SAKURAI（以下、「当社」といいます。）は，本ウェブサイト上で提供するサービス（以下、「本サービス」といいます。）における、ユーザーの個人情報の取扱いについて、以下のとおりプライバシーポリシー（以下、「本ポリシー」といいます。）を定めます。
+              </p>
+              <h4>01. 個人情報保護方針</h4>
+              <p>
+                当社は、個人情報保護の重要性を認識し、個人情報保護の方針を定めるとともに、個人情報の適切な保護に努めます。個人情報の収集、利用に関する基本原則、管理方法ならびに実効性を持たせる手段として教育・訓練、監査等について以下のとおり規定し、実行して参ります。
+              </p>
+              <h4>02. 個人情報の収集、利用、提供等に関する基本原則</h4>
+              <ol>
+                <li>個人情報を直接収集する際は、適法かつ公正な手段により、本人の同意を得た上で行います。</li>
+                <li>収集にあたっては、利用目的を明確にし、その目的のために必要な範囲内にとどめます。</li>
+                <li>個人の利益を侵害する可能性が高い機微な情報は、本人の明確な同意がある場合または法令等の裏付けがある場合以外には収集しません。</li>
+                <li>当社が個人情報の処理を伴う業務を外部から受託する場合や外部へ委託する場合は、個人情報に関する秘密の保持、再委託に関する事項、事故時の責任分担、契約終了時の個人情報の返却および消去等について定め、それに従います。</li>
+                <li>個人情報は、本人の同意を得た範囲内で利用、提供します。</li>
+              </ol>
+              <h4>03. 個人情報の管理について</h4>
+              <ol>
+                <li>当社が直接収集または外部から業務を受託する際に入手した個人情報は、正確な状態に保ち、不正アクセス、紛失・破壊・改ざんおよび漏洩等を防止するための措置を講じます。</li>
+                <li>個人情報の処理を伴う業務を外部から受託する場合は、委託者が個人情報を入手した際、本人の同意を得た上で、適法かつ公正な手段によって収集したものであることを確認します。</li>
+              </ol>
+              <h4>04. 法令及びその他の規範について</h4>
+              <p>
+                当社は、個人情報の保護に関係する日本の法令及びその他の規範を遵守し、本方針の継続的改善に努めます。
+              </p>
+              <h4>05. 本人からのお問い合わせ</h4>
+              <p>
+                本人からの個人情報の取扱いに関するお問い合わせには、妥当な範囲において、すみやかな対応に努めます。このページの内容に関するご質問及びお客様がご自身の個人情報についてご確認されたい場合には、メールフォームよりお問い合わせください。
+              </p>
+              <h4>06. お問い合わせ</h4>
+              <p>
+                当社の個人情報の取扱に関するお問い合わせは下記までご連絡ください。<br />
+                住所：〒102-0072 東京都千代田区飯田橋2-9-4<br />
+                社名：株式会社 SAKURAI<br />
+                電話番号：03-6261-5585
+              </p>
+            </div>
+            <label class="privacy-check">
+              <input type="checkbox" name="privacy_agree" required />
+              <span>プライバシーポリシーに同意する</span>
+              <b>必須</b>
+            </label>
+          </div>
+
+          <button type="submit">フォームを送信</button>
+          <div class="form-success" role="status" aria-live="polite">
+            フォームの送信が成功しました。<br />
+            担当者より２営業日以内にご連絡させていただきます。
+          </div>
         </form>
       </div>
     </section>
@@ -457,17 +534,39 @@
 
   <footer class="site-footer">
     <div class="container footer-inner">
-      <div>
-        <strong>株式会社SAKURAI</strong>
-        <p>アスベスト調査・除去・解体工事</p>
+      <div class="footer-brand">
+        <a href="#" class="footer-logo">
+          <span>S</span>
+          <div>
+            <strong>株式会社SAKURAI</strong>
+            <small>アスベスト調査・除去・解体工事</small>
+          </div>
+        </a>
+        <p>
+          有資格者によるアスベスト調査から、必要に応じた除去・解体工事まで。
+          建物の状況に合わせて、法令対応を丁寧にサポートします。
+        </p>
       </div>
 
-      <div>
-        <p>お電話でのお問い合わせ</p>
+      <nav class="footer-nav" aria-label="フッターナビゲーション">
+        <a href="#reason">選ばれる理由</a>
+        <a href="#flow">サービスの流れ</a>
+        <a href="#cost">費用について</a>
+        <a href="#works">施工実績</a>
+        <a href="#faq">よくある質問</a>
+      </nav>
+
+      <div class="footer-contact">
+        <span>お電話でのご相談</span>
         <a href="tel:0120390186">0120-390-186</a>
+        <p>受付時間は営業日に順次対応いたします。</p>
+        <a class="footer-cta" href="#contact">フォームで相談する</a>
       </div>
 
-      <p class="copyright">© SAKURAI Co., Ltd. All Rights Reserved.</p>
+      <div class="footer-bottom">
+        <p>〒102-0072 東京都千代田区飯田橋2-9-4</p>
+        <p class="copyright">© SAKURAI Co., Ltd. All Rights Reserved.</p>
+      </div>
     </div>
   </footer>
 

@@ -83,3 +83,10 @@ document.querySelectorAll(".faq-grid details").forEach((details) => {
     }, 320);
   });
 });
+
+const contactForm = document.querySelector(".contact-form");
+const params = new URLSearchParams(window.location.search);
+
+if (contactForm && params.get("sent") === "1") {
+  contactForm.classList.add("is-sent");
+}
