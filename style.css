@@ -59,8 +59,8 @@ a{text-decoration:none;color:inherit}
 }
 .sakurai-logo-symbol{
   display:block;
-  width:70%;
-  height:70%;
+  width:48%;
+  height:48%;
   object-fit:contain;
   mix-blend-mode:screen;
 }
@@ -1924,15 +1924,17 @@ details.is-closing p{
   width:50px;
   height:50px;
   border-radius:14px;
-  background:linear-gradient(135deg,#0f766e,var(--teal));
+  background:
+    radial-gradient(circle at 30% 22%, rgba(255,255,255,.22), transparent 28%),
+    linear-gradient(145deg,#13b5aa 0%,#0f766e 46%,#082943 100%);
   color:#fff;
   font-size:24px;
   font-weight:900;
   box-shadow:0 16px 34px rgba(0,0,0,.18);
 }
 .footer-logo .sakurai-logo-symbol{
-  width:68%;
-  height:68%;
+  width:48%;
+  height:48%;
 }
 .footer-logo strong{
   display:block;
