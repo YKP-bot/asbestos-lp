@@ -3093,6 +3093,26 @@ inset 0 1px 1px rgba(255,255,255,.85);
   }
 }
 
+@media (min-width:1200px) and (max-width:1280px){
+  .contact-section{
+    background:#fff;
+  }
+
+  .contact-section::before{
+    content:"";
+    position:absolute;
+    left:0;
+    right:0;
+    top:120px;
+    height:560px;
+    background:
+      radial-gradient(ellipse at 12% 76%, rgba(19,181,170,.1) 0%, rgba(19,181,170,.052) 42%, rgba(19,181,170,0) 72%);
+    -webkit-mask-image:linear-gradient(180deg, transparent 0%, transparent 16%, #000 44%, #000 82%, transparent 100%);
+    mask-image:linear-gradient(180deg, transparent 0%, transparent 16%, #000 44%, #000 82%, transparent 100%);
+    pointer-events:none;
+  }
+}
+
 /* Wide PC proportional layout
    Keep the 1280x800 CSS untouched. Above that, expand the existing desktop
    design by viewport width so 1920x1080 carries the same information density
@@ -3522,6 +3542,16 @@ inset 0 1px 1px rgba(255,255,255,.85);
 
   .flow-section{
     padding-top:calc(82 * var(--pc));
+    background:linear-gradient(180deg,#ffffff 0%,#ffffff 100%);
+  }
+
+  .flow-section::before{
+    top:calc(-150 * var(--pc));
+    height:calc(680 * var(--pc));
+    background:
+      radial-gradient(ellipse at 12% 70%, rgba(19,181,170,.07) 0%, rgba(19,181,170,.045) 38%, rgba(19,181,170,0) 68%);
+    -webkit-mask-image:linear-gradient(180deg, transparent 0%, #000 24%, #000 68%, transparent 100%);
+    mask-image:linear-gradient(180deg, transparent 0%, #000 24%, #000 68%, transparent 100%);
   }
 
   .flow-layout{
@@ -3742,6 +3772,24 @@ inset 0 1px 1px rgba(255,255,255,.85);
   .contact-grid{
     grid-template-columns:minmax(0, calc(500 * var(--pc))) minmax(0,1fr);
     gap:calc(42 * var(--pc));
+  }
+
+  .contact-section{
+    background:linear-gradient(180deg,#ffffff 0%,#ffffff 100%);
+  }
+
+  .contact-section::before{
+    content:"";
+    position:absolute;
+    left:0;
+    right:0;
+    top:calc(-140 * var(--pc));
+    height:calc(760 * var(--pc));
+    background:
+      radial-gradient(ellipse at 12% 74%, rgba(19,181,170,.09) 0%, rgba(19,181,170,.052) 40%, rgba(19,181,170,0) 70%);
+    -webkit-mask-image:linear-gradient(180deg, transparent 0%, transparent 18%, #000 42%, #000 82%, transparent 100%);
+    mask-image:linear-gradient(180deg, transparent 0%, transparent 18%, #000 42%, #000 82%, transparent 100%);
+    pointer-events:none;
   }
 
   .contact-benefits{
