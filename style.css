@@ -10,6 +10,7 @@
   --line:#e5edf3;
   --bg:#f5f8fb;
   --white:#fff;
+  --logo-blue:rgb(0,19,134);
   --shadow:0 18px 45px rgba(11,47,79,.12);
   --radius:22px;
   --container:1180px;
@@ -54,15 +55,19 @@ a{text-decoration:none;color:inherit}
   width:42px;height:42px;
   display:grid;place-items:center;
   color:#fff;
-  background:linear-gradient(135deg,var(--navy),var(--teal));
+  background:var(--logo-blue);
   border-radius:12px;
+  box-shadow:
+    0 16px 34px rgba(0,19,134,.26),
+    0 5px 12px rgba(0,0,0,.14),
+    0 0 0 1px rgba(0,19,134,.10);
 }
 .sakurai-logo-symbol{
   display:block;
   width:48%;
   height:48%;
   object-fit:contain;
-  mix-blend-mode:screen;
+  mix-blend-mode:normal;
 }
 .logo small{display:block;font-size:11px;color:var(--muted);font-weight:500}
 .global-nav{display:flex;gap:24px;font-size:14px;font-weight:700;color:#334155}
@@ -1436,6 +1441,89 @@ linear-gradient(
   display:grid;
   align-content:center;
 }
+.area-card{
+  min-height:344px;
+  grid-template-columns:minmax(0,.78fr) minmax(220px,1fr);
+  align-items:center;
+  align-content:stretch;
+  gap:24px;
+  padding:32px;
+  background:
+    radial-gradient(circle at 82% 22%, rgba(19,181,170,.14), transparent 34%),
+    linear-gradient(135deg, rgba(255,255,255,.94), rgba(241,251,250,.86));
+}
+.area-card::after{
+  right:-72px;
+  top:-58px;
+  width:190px;
+  height:190px;
+  background:rgba(19,181,170,.09);
+}
+.area-copy,
+.kanto-map{
+  position:relative;
+  z-index:1;
+}
+.area-card strong{
+  font-size:clamp(42px,4vw,58px);
+  margin:10px 0 2px;
+}
+.area-card small{
+  font-size:15px;
+}
+.kanto-map{
+  justify-self:end;
+  width:min(100%,330px);
+  aspect-ratio:360 / 300;
+  transform:translateX(-34px);
+}
+.kanto-map svg{
+  position:relative;
+  z-index:1;
+  display:block;
+  width:100%;
+  height:100%;
+  overflow:visible;
+}
+.map-silhouette{
+  fill:#68ddd4;
+  stroke:none;
+  opacity:.34;
+  filter:
+    drop-shadow(0 18px 26px rgba(20,116,126,.12))
+    drop-shadow(-10px 0 20px rgba(74,224,214,.2))
+    drop-shadow(10px 8px 18px rgba(255,255,255,.42));
+}
+.map-pref{
+  fill:url(#kanto-fill);
+  stroke:rgba(255,255,255,.68);
+  stroke-width:1.32;
+  stroke-linejoin:round;
+  stroke-linecap:round;
+  paint-order:stroke fill;
+  opacity:.97;
+  filter:
+    drop-shadow(0 0 9px rgba(255,255,255,.74))
+    drop-shadow(0 0 18px rgba(61,224,214,.26))
+    drop-shadow(0 14px 20px rgba(23,118,128,.1));
+}
+@media(max-width:640px){
+  .area-card{
+    grid-template-columns:1fr;
+    min-height:0;
+    gap:20px;
+  }
+
+  .area-card strong{
+    font-size:36px;
+  }
+
+  .kanto-map{
+    justify-self:stretch;
+    width:100%;
+    transform:none;
+  }
+}
 
 /* faq */
 .faq-section{
@@ -1924,13 +2012,13 @@ details.is-closing p{
   width:50px;
   height:50px;
   border-radius:14px;
-  background:
-    radial-gradient(circle at 30% 22%, rgba(255,255,255,.22), transparent 28%),
-    linear-gradient(145deg,#13b5aa 0%,#0f766e 46%,#082943 100%);
+  background:var(--logo-blue);
   color:#fff;
   font-size:24px;
   font-weight:900;
-  box-shadow:0 16px 34px rgba(0,0,0,.18);
+  box-shadow:
+    8px 12px 28px rgba(150,220,255,.18),
+    0 12px 24px rgba(3,13,68,.26);
 }
 .footer-logo .sakurai-logo-symbol{
   width:48%;
@@ -1954,6 +2042,49 @@ details.is-closing p{
   font-size:14px;
   font-weight:700;
   line-height:1.9;
+}
+.footer-official-link{
+  grid-column:1/-1;
+  justify-self:center;
+  display:inline-grid;
+  justify-items:center;
+  gap:6px;
+  width:max-content;
+  margin:0 auto;
+  transform:translateY(6px);
+  color:#d8e8f3;
+  text-align:center;
+  transition:opacity .2s ease;
+}
+.footer-official-link:hover{
+  opacity:.78;
+}
+.footer-official-name{
+  color:#c8dbea;
+  font-size:12px;
+  font-weight:900;
+  letter-spacing:.06em;
+}
+.footer-official-logo{
+  display:grid;
+  place-items:center;
+  width:112px;
+  height:112px;
+  padding:16px;
+  border:2px solid rgba(216,232,243,.56);
+  border-radius:12px;
+  background:transparent;
+  box-shadow:none;
+}
+.footer-official-logo img{
+  width:100%;
+  height:100%;
+  object-fit:contain;
+}
+.footer-official-text{
+  color:#c8dbea;
+  font-size:12px;
+  font-weight:900;
 }
 .footer-nav{
   display:grid;
@@ -2015,19 +2146,29 @@ details.is-closing p{
 }
 .footer-address{
   grid-column:1/-1;
+  position:relative;
   margin-top:2px;
+  transform:translateY(-16px);
   color:#9fb8cd;
   font-size:12px;
   font-weight:700;
+}
+.footer-address::after{
+  content:"";
+  position:absolute;
+  left:0;
+  right:0;
+  bottom:-30px;
+  height:1px;
+  background:rgba(255,255,255,.12);
 }
 .footer-bottom{
   grid-column:1/-1;
   display:flex;
   justify-content:flex-end;
   gap:18px;
-  margin-top:4px;
-  padding-top:22px;
-  border-top:1px solid rgba(255,255,255,.12);
+  margin-top:-20px;
+  padding-top:0;
   color:#9fb8cd;
   font-size:12px;
   font-weight:700;
@@ -3538,6 +3679,34 @@ inset 0 1px 1px rgba(255,255,255,.85);
     min-height:calc(136 * var(--pc));
   }
 
+  .area-card{
+    min-height:calc(344 * var(--pc));
+    grid-template-columns:minmax(0,.78fr) minmax(calc(220 * var(--pc)),1fr);
+    gap:calc(24 * var(--pc));
+    padding:calc(32 * var(--pc));
+  }
+
+  .area-card::after{
+    right:calc(-72 * var(--pc));
+    top:calc(-58 * var(--pc));
+    width:calc(190 * var(--pc));
+    height:calc(190 * var(--pc));
+  }
+
+  .area-card strong{
+    font-size:calc(48 * var(--pc));
+    margin:calc(10 * var(--pc)) 0 calc(2 * var(--pc));
+  }
+
+  .area-card small{
+    font-size:calc(15 * var(--pc));
+  }
+
+  .kanto-map{
+    width:min(100%, calc(330 * var(--pc)));
+    transform:translateX(calc(-34 * var(--pc)));
+  }
+
   .faq-grid{
     max-width:calc(960 * var(--pc));
     gap:calc(12 * var(--pc));
@@ -3693,6 +3862,26 @@ inset 0 1px 1px rgba(255,255,255,.85);
     font-size:calc(14 * var(--pc));
   }
 
+  .footer-official-text{
+    font-size:calc(12 * var(--pc));
+  }
+
+  .footer-official-link{
+    gap:calc(6 * var(--pc));
+    transform:translateY(calc(6 * var(--pc)));
+  }
+
+  .footer-official-name{
+    font-size:calc(12 * var(--pc));
+  }
+
+  .footer-official-logo{
+    width:calc(112 * var(--pc));
+    height:calc(112 * var(--pc));
+    padding:calc(16 * var(--pc));
+    border-radius:calc(12 * var(--pc));
+  }
+
   .footer-contact{
     padding:calc(22 * var(--pc));
     border-radius:calc(22 * var(--pc));
@@ -3709,6 +3898,14 @@ inset 0 1px 1px rgba(255,255,255,.85);
   .footer-address,
   .copyright{
     font-size:calc(12 * var(--pc));
+  }
+
+  .footer-address::after{
+    bottom:calc(-30 * var(--pc));
+  }
+
+  .footer-address{
+    transform:translateY(calc(-16 * var(--pc)));
   }
 }
 
