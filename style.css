@@ -7134,3 +7134,83 @@ inset 0 1px 1px rgba(255,255,255,.85);
     margin-inline:auto;
   }
 }
+
+/* ======================================================
+  Mobile footer official link restore
+====================================================== */
+
+@media (max-width:640px){
+  .problem-intro p br,
+  .flow-copy p br,
+  .reason-heading p br,
+  .works-intro p br{
+    display:block !important;
+  }
+
+  .problem-panel::after{
+    display:none;
+  }
+
+  .cost-price-card,
+  .cost-free-card{
+    display:grid;
+    grid-template-columns:1fr;
+    justify-items:center;
+  }
+
+  .cost-price-card strong,
+  .cost-free-card strong{
+    margin-inline:auto;
+  }
+
+  .footer-official-link{
+    grid-column:auto;
+    justify-self:center;
+    display:inline-grid !important;
+    grid-template-columns:1fr;
+    grid-template-areas:
+      "name"
+      "logo"
+      "text";
+    align-items:center;
+    justify-items:center;
+    gap:7px;
+    width:max-content;
+    margin:10px auto 16px;
+    padding:0;
+    transform:none;
+    border:0;
+    border-radius:0;
+    background:transparent;
+    color:#d8e8f3;
+    text-align:center;
+  }
+
+  .footer-official-name{
+    grid-area:name;
+    margin:4px 0 3px;
+    color:#d7e6f2;
+    font-size:12px;
+    font-weight:900;
+    line-height:1.25;
+    letter-spacing:.06em;
+  }
+
+  .footer-official-logo{
+    grid-area:logo;
+    width:74px;
+    height:74px;
+    padding:10px;
+    border-radius:10px;
+    border:1px solid rgba(216,232,243,.42);
+  }
+
+  .footer-official-text{
+    grid-area:text;
+    margin:2px 0 4px;
+    color:#c8dbea;
+    font-size:12px;
+    font-weight:900;
+    line-height:1.25;
+  }
+}
