@@ -114,6 +114,7 @@ a{text-decoration:none;color:inherit}
 
 /* hero */
 .hero{
+  --hero-preview:url("data:image/webp;base64,UklGRnoDAABXRUJQVlA4IG4DAACwGACdASqQAFEAPt1iqlEopSOipzFcMRAbiWc4AA0YBFLhas7Y6rtMsNhQJLFhsyMu7TK1r9r8jlRuCSljFjK7OycuDHSIZB+RZj+4p4sRg7rrZQxFRCRjgpDrdpENJChDXNt/aj4dI4uRCsMdkSFRSKNz8x8SJPYK7sJ485Z18Bjc7c8yH9lsVl2yENXXu5T4Iu52Widnx5LMixnvdtjc+JhQGv44c+I2okSAqvM5mVIvAfgRa9yaf6rSEoECoJi4ee/PZ0TpJGp+I8EAYAD+871I9KDogf/S37kMHYCGbOd8AVWpryh3m80TqGvIfk8JwN6Tkt7Ty/Wai2/c1wXpRYMjWKMszEuZM4fXjpcrV8jBb0xRCqYlogOnD92/kcmFCHgvhXi+ar861zfMh/FCGT6KpdaQVkda0+wWM1IpBLWJZwdHnDAT0snPoxJzuTNLqxXJDLouhDhxg1Bns8RZIj5ZHyRvWiSd2cwCxpyajosSHDpeNqPYpp6pH5ncZA2Yxyp0ZEuOQemXOmaqVoOZUD6kEZBpcw9WgihtGxhUdNwk3DNzNNsq/4euw7zech4fAYcS9QChO/Qx6XSnFyfYWZ15p+caVcTI/EMIRdZyyAgQyMa4rFWvQqjh/fA8Bdw8MEgy/LmTOOBqJKk348JnCrxfNbG8gun2Zcjvw4meNRAIBFe4mHevg5nChK9i3ID27cjcxKlzsCvX2n2WGzAMHJYGeFbDRD/gsXQP+rGhYBq3GDyIY0n0JN9/0UBh2e3V7zZ+06AWE5q0Xd20hrihWuDRB/kPazcE7FyZPBYu0FuDNWPljgVlimjq0H6PdQZwpOIYPdTG0+JlORrk6vBsUV9kju4wDeRE2VuT5Ht6Ha7t0JpYCZPOCCOVhSZoYPHJp7IByJqUsi1ae8IVFqA7T+X8WrIJncjcFo/Em2DlACtUeRQeZjy8RH2MJw7WSdcziC/tOSITt24r6HcvWXsxFG0g1U3RWX17lJ+Q5TLaz9TOUUdOF93xe44B60cvnvu4vF6eZ7eyoSplI9b4yU/oIGmj8Q4oIqsLui0aEOecyNzITMoqJjDIGKG6Vyy4aCdMserFGfE9/QdqiNqjCP3vGOPVzgSn8D0LboYAqu6LSrI4KghkHHjahTBnkCqXmumzxALKIrZD2aYWdedAAA==");
   position:relative;
   padding:86px 0 20px;
   min-height:700px;
@@ -135,7 +136,8 @@ linear-gradient(
     rgba(255,255,255,.35) 68%,
     rgba(255,255,255,0) 84%
 ),
-    url("images/hero/hero-main.webp");
+    url("images/hero/hero-main.webp"),
+    var(--hero-preview);
   background-repeat:no-repeat;
   background-size:112%;
   background-position:88% -50%;
@@ -2637,7 +2639,8 @@ inset 0 1px 1px rgba(255,255,255,.85);
     background:
       linear-gradient(to bottom, rgba(255,255,255,0) 55%, rgba(245,249,252,.25) 75%, #eef6fb 100%),
       linear-gradient(90deg, rgba(247,252,255,.94) 0%, rgba(247,252,255,.90) 18%, rgba(247,252,255,.74) 30%, rgba(255,255,255,.96) 45%, rgba(255,255,255,.88) 55%, rgba(255,255,255,.35) 68%, rgba(255,255,255,0) 84%),
-      url("images/hero/hero-main.webp");
+      url("images/hero/hero-main.webp"),
+      var(--hero-preview);
     background-repeat:no-repeat;
     background-size:112%;
     background-position:88% -50%;
@@ -3553,10 +3556,11 @@ inset 0 1px 1px rgba(255,255,255,.85);
     background:
       linear-gradient(180deg,rgba(247,252,255,.08) 0%,rgba(247,252,255,.28) 45%,#eef6fb 100%),
       linear-gradient(90deg,rgba(247,252,255,.98) 0%,rgba(247,252,255,.94) 44%,rgba(247,252,255,.44) 70%,rgba(247,252,255,0) 100%),
-      url("images/hero/hero-main.webp");
+      url("images/hero/hero-main.webp"),
+      var(--hero-preview);
     background-repeat:no-repeat;
-    background-size:100% 100%,100% 100%,auto 690px;
-    background-position:center,center,64% 96px;
+    background-size:100% 100%,100% 100%,auto 690px,auto 690px;
+    background-position:center,center,64% 96px,64% 96px;
   }
 
   .hero-inner{
@@ -4119,8 +4123,8 @@ inset 0 1px 1px rgba(255,255,255,.85);
   .hero{
     min-height:790px;
     padding-top:86px;
-    background-size:100% 100%,100% 100%,auto 610px;
-    background-position:center,center,66% 96px;
+    background-size:100% 100%,100% 100%,auto 610px,auto 610px;
+    background-position:center,center,66% 96px,66% 96px;
   }
 
   .hero-copy{
@@ -4235,10 +4239,11 @@ inset 0 1px 1px rgba(255,255,255,.85);
     background:
       linear-gradient(180deg,rgba(247,252,255,.08) 0%,rgba(247,252,255,.22) 44%,#eef6fb 100%),
       linear-gradient(90deg,rgba(247,252,255,.99) 0%,rgba(247,252,255,.93) 46%,rgba(247,252,255,.32) 72%,rgba(247,252,255,0) 100%),
-      url("images/hero/hero-main.webp");
+      url("images/hero/hero-main.webp"),
+      var(--hero-preview);
     background-repeat:no-repeat;
-    background-size:100% 100%,100% 100%,auto 440px;
-    background-position:center,center,63% 142px;
+    background-size:100% 100%,100% 100%,auto 440px,auto 440px;
+    background-position:center,center,63% 142px,63% 142px;
   }
 
   .hero-copy{
@@ -4780,10 +4785,11 @@ inset 0 1px 1px rgba(255,255,255,.85);
     background:
       linear-gradient(180deg,rgba(247,252,255,.04) 0%,rgba(247,252,255,.16) 43%,#eef6fb 100%),
       linear-gradient(90deg,rgba(247,252,255,.99) 0%,rgba(247,252,255,.9) 43%,rgba(247,252,255,.24) 70%,rgba(247,252,255,0) 100%),
-      url("images/hero/hero-main.webp");
+      url("images/hero/hero-main.webp"),
+      var(--hero-preview);
     background-repeat:no-repeat;
-    background-size:100% 100%,100% 100%,auto 500px;
-    background-position:center,center,68% 100px;
+    background-size:100% 100%,100% 100%,auto 500px,auto 500px;
+    background-position:center,center,68% 100px,68% 100px;
   }
 
   .hero-copy{
@@ -5031,8 +5037,8 @@ inset 0 1px 1px rgba(255,255,255,.85);
   }
 
   .hero{
-    background-size:100% 100%,100% 100%,auto 490px;
-    background-position:center,center,68% 98px;
+    background-size:100% 100%,100% 100%,auto 490px,auto 490px;
+    background-position:center,center,68% 98px,68% 98px;
   }
 
   .hero h1{
@@ -5084,13 +5090,15 @@ inset 0 1px 1px rgba(255,255,255,.85);
   }
 
   .hero{
+    --hero-preview:url("data:image/webp;base64,UklGRiIEAABXRUJQVlA4IBYEAACwIgCdASqQAHUAPt1kqlGopSiipHGtaRAbiWcA03UHQPbGUMwqDauibdO3HTlfEAcitVe124qfPdenB6fUryKPlQr2/ct5cv6Ig8KUodRHvffa13P34Hvb5zNHSJzTGU4ReFKWuLRawHyM241SCDEd9RuA0EpajD6G/ltU6Lwe3DshTE+IXzX9n3yfh+H2mUnRF4Yvg3zI4m2AzoJ0tqA8/brUJuN9P2/NI5JpH44X/TYWDh5q+dVRorVj30FMMxYx1ZMafsynZNr5lu1tzHJlG4PM5att1A65uxU50rKpSZRehQ/JKAaJ6VobLI6MXemb7W2w6qkKxTVOejggJrKnzS0lPsr2qy7RbgghMvNurbVI/jrI2LQOWf95Re+gAP7gjIz0geq/uF+C1UZaSYd+oegGQNqxTdZPPBLfJXf2fXyNhzRUcTJcoQO7QkTO3bR93Q1A68Nv45OpER9Xr58jvfJuxwaLlSsVIFvbZVrJ6nAiGUbhwjySLMPSwsfVvVllLQwyW+yzLuVP7kdMOpDp2zr9S+zCHlLeWmSJumMMYj5DAGeGaaG0rF3hjMTTSGuyZb5VrDzyKIIgKLs+SFvc+aK0fFr0nBA/wCNc466kJiQY0kzTv1oNdTOH9baVnVuhbSpJYGhItZpHAUwie/MqpeNfw1/T6Tdp2ENL4B0vMxBLHUh1T3RxE8s8IT1Md6ApbqL8sBin6M86/FTp8Wc5iGpDKz2da9g44Iz4MDky/psWMFAOzp7WXvnuO7VGAJS3Nek3A+iqFT/xJww2MAsRIznYjGnYNXlSTOCeT90xlW65OY+LE3SEjiu7cHffAEoymXHka4RHZVuu1P8MBd58RZaIkS/iUYPG7MqCUSZTXpEs7ocLrgnKPlMBlgQjf7FgMSGKZ9k5evn+4wvjIZuqY15rZqvsQykei5bwY4pxuXR4+0iplNUYI4YG3+gR5LP24qDBSxosvm6Y6ZYGhCRcp8K6jp+2b+1lX6a0mUTKIXMKtkJ8iY4W7MZxAQEnV7f9WMqJIMNGJoLRYZ7/9sFVCJzrKX/ZEeABcSObf2nXo0uu2b1Km/2irOAUetd/4GDDSt/Rv3fz1dflIqea1T2hKFRGbKcD7k5tfoOFkAFaJT/u3mA8qfmHvPIMxlxXPGABTk7lxDKaOVaS6tYl+Ucq3JLZhECJ/1ceCd8yefg40O37ifd7eilzqcTQ+IlnPZMCacCAs0mtEeWoXwqb5/ipf2q46noYSUevsijHKsXGCjRzDuXF8cd6E/3D9iwijIdelVkMMg7CFMRNODUvr/W8MXF1YHF4WKffAV5UJK02gG0dgUkzLklYv94wgy8jr6OfCMZs5gvB2YWS5cmfdc6Pt23bcIkkAznlQESSEwuHMaekjwAAAA==");
     background:
       linear-gradient(180deg,rgba(247,252,255,.02) 0%,rgba(247,252,255,.12) 43%,#eef6fb 100%),
       linear-gradient(90deg,rgba(247,252,255,.99) 0%,rgba(247,252,255,.9) 40%,rgba(247,252,255,.20) 68%,rgba(247,252,255,0) 100%),
-      url("images/hero/hero-main-mobile-extended.webp");
+      url("images/hero/hero-main-mobile-extended.webp"),
+      var(--hero-preview);
     background-repeat:no-repeat;
-    background-size:100% 100%,100% 100%,auto 525px;
-    background-position:center,center,76% 0;
+    background-size:100% 100%,100% 100%,auto 525px,auto 525px;
+    background-position:center,center,76% 0,76% 0;
   }
 
   .hero-copy{
@@ -5128,8 +5136,8 @@ inset 0 1px 1px rgba(255,255,255,.85);
 
 @media (min-width:391px) and (max-width:430px){
   .hero{
-    background-size:100% 100%,100% 100%,auto 545px;
-    background-position:center,center,77% 0;
+    background-size:100% 100%,100% 100%,auto 545px,auto 545px;
+    background-position:center,center,77% 0,77% 0;
   }
 
   .hero h1{
@@ -5147,8 +5155,8 @@ inset 0 1px 1px rgba(255,255,255,.85);
 
 @media (max-width:390px){
   .hero{
-    background-size:100% 100%,100% 100%,auto 525px;
-    background-position:center,center,76% 0;
+    background-size:100% 100%,100% 100%,auto 525px,auto 525px;
+    background-position:center,center,76% 0,76% 0;
   }
 
   .cost-box{
@@ -5175,10 +5183,11 @@ inset 0 1px 1px rgba(255,255,255,.85);
       linear-gradient(180deg,rgba(238,246,251,0) 0%,rgba(238,246,251,0) 32%,rgba(238,246,251,.28) 39%,rgba(238,246,251,.78) 47%,#eef6fb 57%,#eef6fb 100%),
       radial-gradient(ellipse 330px 228px at 68px 158px,rgba(255,255,255,.80) 0%,rgba(255,255,255,.62) 36%,rgba(255,255,255,.26) 62%,rgba(255,255,255,0) 86%),
       linear-gradient(104deg,rgba(247,252,255,.97) 0%,rgba(247,252,255,.90) 22%,rgba(247,252,255,.54) 38%,rgba(247,252,255,.16) 52%,rgba(247,252,255,0) 64%),
-      url("images/hero/hero-main-mobile-extended.webp");
+      url("images/hero/hero-main-mobile-extended.webp"),
+      var(--hero-preview);
     background-repeat:no-repeat;
-    background-size:100% 100%,100% 100%,100% 100%,auto 620px;
-    background-position:center,center,center,83% -68px;
+    background-size:100% 100%,100% 100%,100% 100%,auto 620px,auto 620px;
+    background-position:center,center,center,83% -68px,83% -68px;
   }
 
   .hero-copy::before{
@@ -5468,8 +5477,8 @@ inset 0 1px 1px rgba(255,255,255,.85);
 
 @media (min-width:391px) and (max-width:430px){
   .hero{
-    background-size:100% 100%,100% 100%,100% 100%,auto 642px;
-    background-position:center,center,center,84% -76px;
+    background-size:100% 100%,100% 100%,100% 100%,auto 642px,auto 642px;
+    background-position:center,center,center,84% -76px,84% -76px;
   }
 
   .hero h1{
@@ -5487,8 +5496,8 @@ inset 0 1px 1px rgba(255,255,255,.85);
 
 @media (max-width:390px){
   .hero{
-    background-size:100% 100%,100% 100%,100% 100%,auto 620px;
-    background-position:center,center,center,83% -68px;
+    background-size:100% 100%,100% 100%,100% 100%,auto 620px,auto 620px;
+    background-position:center,center,center,83% -68px,83% -68px;
   }
 
   .cost-box{
