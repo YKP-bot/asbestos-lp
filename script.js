@@ -138,6 +138,101 @@ document.querySelectorAll(".faq-grid details").forEach((details) => {
 const contactForm = document.querySelector(".contact-form");
 const params = new URLSearchParams(window.location.search);
 
-if (contactForm && params.get("sent") === "1") {
-  contactForm.classList.add("is-sent");
+if (contactForm) {
+  const sendStatus = params.get("sent");
+
+  if (sendStatus === "1") {
+    contactForm.classList.add("is-sent");
+  } else if (sendStatus === "0") {
+    contactForm.classList.add("is-error");
+  }
 }
+
+// Smartphone navigation: align each section heading below the fixed header.
+const mobileAnchorHeadings = {
+  "#flow": ".flow-copy .section-kicker",
+  "#reason": ".reason-heading .section-kicker",
+  "#cost": ".cost-copy .section-kicker",
+  "#works": ".works-intro .section-kicker",
+  "#faq": ".faq-section .section-heading h2"
+};
+
+document.querySelectorAll(".global-nav a[href^='#'], .footer-nav a[href^='#']").forEach((link) => {
+  link.addEventListener("click", (event) => {
+    if (!window.matchMedia("(max-width:640px)").matches) return;
+
+    const hash = link.getAttribute("href");
+    const headingSelector = mobileAnchorHeadings[hash];
+    const section = headingSelector ? document.querySelector(hash) : null;
+    const heading = section ? section.querySelector(headingSelector) : null;
+
+    if (!heading) return;
+
+    event.preventDefault();
+
+    const scrolledHeaderHeight = 68;
+    const headingGap = 36;
+    let headingDocumentTop = 0;
+    let offsetElement = heading;
+
+    while (offsetElement) {
+      headingDocumentTop += offsetElement.offsetTop;
+      offsetElement = offsetElement.offsetParent;
+    }
+
+    const targetTop = Math.max(
+      0,
+      headingDocumentTop - scrolledHeaderHeight - headingGap
+    );
+
+    window.history.pushState(null, "", hash);
+    window.scrollTo({ top:targetTop, behavior:"smooth" });
+  });
+});
+
+// Smartphone CTA navigation: use separate stops for the contact intro and form.
+const getLayoutDocumentTop = (element) => {
+  let documentTop = 0;
+  let offsetElement = element;
+
+  while (offsetElement) {
+    documentTop += offsetElement.offsetTop;
+    offsetElement = offsetElement.offsetParent;
+  }
+
+  return documentTop;
+};
+
+const setupMobileCtaScroll = (selector, targetSelector, targetGap) => {
+  document.querySelectorAll(selector).forEach((link) => {
+    link.addEventListener("click", (event) => {
+      if (!window.matchMedia("(max-width:640px)").matches) return;
+
+      const target = document.querySelector(targetSelector);
+      if (!target) return;
+
+      event.preventDefault();
+
+      const scrolledHeaderHeight = 68;
+      const targetTop = Math.max(
+        0,
+        getLayoutDocumentTop(target) - scrolledHeaderHeight - targetGap
+      );
+
+      window.history.pushState(null, "", "#contact");
+      window.scrollTo({ top:targetTop, behavior:"smooth" });
+    });
+  });
+};
+
+setupMobileCtaScroll(
+  ".hero-actions .btn-primary[href='#contact'], .law-button[href='#contact'], .problem-section .solution-card a[href='#contact'], .cost-section .cost-info > a[href='#contact']",
+  ".contact-copy",
+  24
+);
+
+setupMobileCtaScroll(
+  ".contact-section .mobile-contact-primary[href='#contact'], .footer-contact .footer-cta[href='#contact']",
+  ".contact-form",
+  12
+);

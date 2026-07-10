@@ -4,7 +4,7 @@ if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
     exit;
 }
 
-$to = 'info@example.com';
+$to = 'kagawa.yuya.fr@gmail.com';
 $subject = '【アスベスト調査LP】無料相談フォームからのお問い合わせ';
 
 function post_value($key) {

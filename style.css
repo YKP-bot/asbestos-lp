@@ -1962,6 +1962,22 @@ details.is-closing p{
   display:block;
 }
 
+.form-error{
+  display:none;
+  padding:16px 18px;
+  border:1px solid rgba(220,38,38,.24);
+  border-radius:16px;
+  background:rgba(254,242,242,.92);
+  color:#9f1d1d;
+  font-weight:900;
+  line-height:1.75;
+  text-align:center;
+}
+
+.contact-form.is-error .form-error{
+  display:block;
+}
+
 /* footer */
 .site-footer{
   position:relative;
@@ -5483,7 +5499,7 @@ inset 0 1px 1px rgba(255,255,255,.85);
 
 @media (max-width:640px){
   body{
-    padding-bottom:calc(104px + env(safe-area-inset-bottom));
+    padding-bottom:0;
   }
 
   .fixed-cta{
@@ -6277,7 +6293,7 @@ inset 0 1px 1px rgba(255,255,255,.85);
 
 @media (max-width:640px){
   .site-footer{
-    padding:34px 0 calc(126px + env(safe-area-inset-bottom));
+    padding:34px 0 calc(104px + env(safe-area-inset-bottom));
     background:
       radial-gradient(circle at 8% 0%,rgba(19,181,170,.26),transparent 30%),
       radial-gradient(circle at 92% 8%,rgba(116,205,255,.12),transparent 28%),
@@ -6437,7 +6453,7 @@ inset 0 1px 1px rgba(255,255,255,.85);
 
   .footer-address{
     grid-column:auto;
-    margin:0;
+    margin:8px 0 0;
     padding-top:15px;
     transform:none;
     color:#a9c0d5;
@@ -7573,5 +7589,360 @@ inset 0 1px 1px rgba(255,255,255,.85);
   .solution-card a{
     width:min(240px, 100%);
     margin:2px auto 0;
+  }
+}
+
+/* Smartphone hero pricing card: soft glass finish */
+@media (max-width:640px){
+  .cost-box{
+    position:relative;
+    isolation:isolate;
+    overflow:hidden;
+    background:
+      linear-gradient(135deg,rgba(255,255,255,.78),rgba(255,255,255,.46)),
+      linear-gradient(180deg,rgba(229,250,249,.34),rgba(255,255,255,.08));
+    border:1px solid rgba(255,255,255,.88);
+    box-shadow:
+      0 20px 46px rgba(11,47,79,.16),
+      0 5px 14px rgba(19,181,170,.10),
+      inset 0 1px 0 rgba(255,255,255,.96),
+      inset 0 -1px 0 rgba(11,47,79,.05);
+    backdrop-filter:blur(20px) saturate(160%);
+    -webkit-backdrop-filter:blur(20px) saturate(160%);
+  }
+
+  .cost-box::before{
+    content:"";
+    position:absolute;
+    inset:0;
+    z-index:0;
+    pointer-events:none;
+    background:
+      radial-gradient(circle at 12% 0%,rgba(255,255,255,.94),transparent 35%),
+      radial-gradient(circle at 90% 90%,rgba(19,181,170,.20),transparent 42%);
+  }
+
+  .cost-box > *{
+    position:relative;
+    z-index:1;
+  }
+
+  .cost-box strong{
+    text-shadow:0 1px 0 rgba(255,255,255,.68);
+  }
+}
+
+/* Smartphone problem-section CTA: heading left, compact action right */
+@media (max-width:640px){
+  .problem-section .solution-card{
+    grid-template-columns:minmax(0,1fr) clamp(133px,37vw,144px);
+    align-items:center;
+    justify-items:stretch;
+    gap:10px;
+    padding:16px;
+    text-align:left;
+  }
+
+  .problem-section .solution-card > div{
+    min-width:0;
+  }
+
+  .problem-section .solution-card strong{
+    font-size:clamp(13.2px,3.75vw,15px);
+    line-height:1.48;
+  }
+
+  .problem-section .solution-card a{
+    width:clamp(133px,37vw,144px);
+    min-height:46px;
+    margin:0;
+    padding:0 20px;
+    font-size:11px;
+    line-height:1.2;
+    text-align:center;
+    box-shadow:0 10px 20px rgba(19,181,170,.20);
+  }
+}
+
+@media (max-width:374px){
+  .problem-section .solution-card strong{
+    font-size:13.2px;
+  }
+}
+
+@media (min-width:431px) and (max-width:640px){
+  .problem-section .solution-card{
+    grid-template-columns:minmax(0,1fr) 152px;
+    gap:14px;
+  }
+
+  .problem-section .solution-card a{
+    width:152px;
+    padding-inline:22px;
+    font-size:12px;
+  }
+}
+
+/* Smartphone law banner: optical centering for the megaphone only */
+@media (max-width:640px){
+  .law-icon .law-svg{
+    transform:translate(-2px,-3px);
+  }
+}
+
+/* Smartphone WHY SAKURAI cards: readable two-line descriptions */
+@media (max-width:640px){
+  .reason-card{
+    padding-left:12px;
+    padding-right:12px;
+    -webkit-text-size-adjust:none;
+    text-size-adjust:none;
+  }
+
+  .reason-card-mobile-text{
+    font-size:11px;
+    font-weight:700;
+    line-height:18px !important;
+    zoom:76.5%;
+  }
+
+  .reason-card p{
+    margin-top:9px;
+  }
+}
+
+@media (min-width:375px) and (max-width:389px){
+  .reason-card-mobile-text{
+    zoom:80.5%;
+  }
+}
+
+@media (min-width:390px) and (max-width:411px){
+  .reason-card-mobile-text{
+    zoom:84.5%;
+  }
+}
+
+@media (min-width:412px) and (max-width:430px){
+  .reason-card-mobile-text{
+    zoom:88.5%;
+  }
+}
+
+@media (min-width:431px) and (max-width:640px){
+  .reason-card{
+    padding-left:14px;
+    padding-right:14px;
+  }
+
+  .reason-card-mobile-text{
+    zoom:94%;
+  }
+}
+
+/* Smartphone section transitions: soften hard horizontal background seams */
+@media (max-width:640px){
+  .section.problem-section{
+    background:linear-gradient(180deg,
+      #f7fcff 0%,
+      #fff 68%,
+      #f9fdff 100%);
+  }
+
+  .section.flow-section{
+    background:linear-gradient(180deg,
+      #f9fdff 0,
+      #f6fbff 88px,
+      #fff 54%,
+      #f8fcff 100%);
+  }
+
+  .section.reason-section{
+    background:linear-gradient(180deg,
+      #f8fcff 0,
+      #fff 88px,
+      #fff 100%);
+  }
+
+  .section.cost-section{
+    background:linear-gradient(180deg,
+      #fff 0,
+      #fff calc(100% - 88px),
+      #f8fcff 100%);
+  }
+
+  .section.works-section{
+    background:linear-gradient(180deg,
+      #f8fcff 0,
+      #fff 88px,
+      #fff 50%,
+      #f7fcff 100%);
+  }
+
+  .section.faq-section{
+    background:linear-gradient(180deg,
+      #f7fcff 0,
+      #fff 88px,
+      #fff calc(100% - 88px),
+      #f9fdff 100%);
+  }
+
+  .section.contact-section{
+    background:linear-gradient(180deg,
+      #f9fdff 0,
+      #f7fcff 88px,
+      #fff 100%);
+  }
+}
+
+/* Smartphone seam correction: fade fully to white at the two visible joins */
+@media (max-width:640px){
+  .section.flow-section{
+    background:linear-gradient(180deg,
+      #f9fdff 0,
+      #f6fbff 88px,
+      #fff calc(100% - 120px),
+      #fff 100%);
+  }
+
+  .flow-section::before{
+    height:calc(100% - 120px);
+  }
+
+  .section.reason-section{
+    background:#fff;
+  }
+
+  .section.cost-section{
+    background:#fff;
+    overflow:visible;
+  }
+
+  .cost-section::before,
+  .cost-section::after{
+    display:none;
+  }
+
+  .section.works-section{
+    background:linear-gradient(180deg,
+      #fff 0,
+      #fff 120px,
+      #fff 50%,
+      #f7fcff 100%);
+  }
+
+  .footer-nav a[href="#flow"]{
+    grid-column:1;
+    grid-row:1;
+  }
+
+  .footer-nav a[href="#reason"]{
+    grid-column:2;
+    grid-row:1;
+  }
+}
+
+/* Restore the original PC/tablet reason-card paragraph rendering. */
+@media (min-width:641px){
+  .reason-card p > .reason-card-mobile-text{
+    display:none !important;
+  }
+
+  .reason-card p > .reason-card-desktop-text{
+    position:static;
+    z-index:auto;
+    display:inline;
+    width:auto;
+    height:auto;
+    padding:0;
+    border:0;
+    border-radius:0;
+    background:none;
+    box-shadow:none;
+    color:inherit;
+    font:inherit;
+    line-height:inherit;
+  }
+}
+
+/* PC CONTACT benefit pills: add breathing room outside the dot/text group. */
+@media (min-width:1200px) and (max-width:1280px){
+  .contact-benefits li{
+    padding-right:30px;
+    padding-left:54px;
+  }
+
+  .contact-benefits li::before{
+    left:30px;
+  }
+}
+
+@media (min-width:1281px){
+  .contact-benefits li{
+    padding-right:calc(30 * var(--pc));
+    padding-left:calc(54 * var(--pc));
+  }
+
+  .contact-benefits li::before{
+    left:calc(18px + 12 * var(--pc));
+  }
+}
+
+/* Smartphone FAQ: keep every question on one line without touching the + icon. */
+@media (max-width:640px){
+  .faq-grid summary{
+    gap:7px;
+    min-height:62px;
+    padding:14px 42px 14px 10px;
+    font-size:13px;
+    line-height:1.2;
+    white-space:nowrap;
+  }
+
+  .faq-grid summary::before{
+    flex-basis:26px;
+    width:26px;
+    height:26px;
+    min-width:26px;
+    min-height:26px;
+    padding-bottom:2px;
+    font-size:12px;
+  }
+
+  .faq-grid summary::after,
+  .faq-grid details[open] summary::after{
+    right:8px;
+    width:28px;
+    height:28px;
+    min-width:28px;
+    min-height:28px;
+    font-size:21px;
+    line-height:28px;
+  }
+}
+
+@media (max-width:430px){
+  .faq-grid summary{
+    font-size:12px;
+  }
+}
+
+@media (max-width:390px){
+  .faq-grid summary{
+    font-size:11px;
+  }
+}
+
+@media (max-width:374px){
+  .faq-grid summary{
+    font-size:10.2px;
+  }
+
+  .contact-copy h2{
+    max-width:215px;
+  }
+
+  .contact-copy h2::after{
+    font-size:23px;
   }
 }
