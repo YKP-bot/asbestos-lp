@@ -5,6 +5,8 @@
 
 // Header scroll effect
 const header = document.querySelector(".site-header");
+const mobileMenuButton = document.querySelector(".mobile-menu-button");
+const mobileMenu = document.querySelector(".global-nav");
 
 window.addEventListener("scroll", () => {
   if (window.scrollY > 40) {
@@ -13,6 +15,55 @@ window.addEventListener("scroll", () => {
     header.classList.remove("is-scrolled");
   }
 });
+
+if (header && mobileMenuButton && mobileMenu) {
+  mobileMenu.id = mobileMenu.id || "global-nav";
+  mobileMenuButton.setAttribute("aria-controls", mobileMenu.id);
+  mobileMenuButton.setAttribute("aria-expanded", "false");
+  mobileMenuButton.setAttribute("aria-label", "メニューを開く");
+  mobileMenu.setAttribute("aria-hidden", "true");
+
+  const closeMobileMenu = () => {
+    header.classList.remove("is-menu-open");
+    mobileMenuButton.setAttribute("aria-expanded", "false");
+    mobileMenuButton.setAttribute("aria-label", "メニューを開く");
+    mobileMenu.setAttribute("aria-hidden", "true");
+  };
+
+  mobileMenuButton.addEventListener("click", (event) => {
+    event.stopPropagation();
+    const isOpen = header.classList.toggle("is-menu-open");
+    mobileMenuButton.setAttribute("aria-expanded", String(isOpen));
+    mobileMenuButton.setAttribute("aria-label", isOpen ? "メニューを閉じる" : "メニューを開く");
+    mobileMenu.setAttribute("aria-hidden", String(!isOpen));
+  });
+
+  mobileMenu.querySelectorAll("a").forEach((link) => {
+    link.addEventListener("click", closeMobileMenu);
+  });
+
+  document.addEventListener("click", (event) => {
+    if (
+      window.matchMedia("(max-width:640px)").matches &&
+      header.classList.contains("is-menu-open") &&
+      !header.contains(event.target)
+    ) {
+      closeMobileMenu();
+    }
+  });
+
+  document.addEventListener("keydown", (event) => {
+    if (event.key === "Escape") {
+      closeMobileMenu();
+    }
+  });
+
+  window.addEventListener("resize", () => {
+    if (!window.matchMedia("(max-width:640px)").matches) {
+      closeMobileMenu();
+    }
+  });
+}
 
 
 // Scroll reveal animation
