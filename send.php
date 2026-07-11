@@ -20,7 +20,7 @@ $contact_method = post_value('contact_method');
 $message = post_value('message');
 $privacy_agree = isset($_POST['privacy_agree']) ? '同意済み' : '未同意';
 
-if ($company === '' || $name === '' || $tel === '' || $email === '' || $building === '' || $contact_method === '' || !isset($_POST['privacy_agree'])) {
+if ($name === '' || $tel === '' || $email === '' || $building === '' || $contact_method === '' || !isset($_POST['privacy_agree'])) {
     header('Location: index.html#contact');
     exit;
 }

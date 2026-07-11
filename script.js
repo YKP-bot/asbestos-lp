@@ -226,7 +226,7 @@ const setupMobileCtaScroll = (selector, targetSelector, targetGap) => {
 };
 
 setupMobileCtaScroll(
-  ".hero-actions .btn-primary[href='#contact'], .law-button[href='#contact'], .problem-section .solution-card a[href='#contact'], .cost-section .cost-info > a[href='#contact']",
+  ".hero-actions .btn-primary[href='#contact'], .law-button[href='#contact'], .problem-section .solution-card a[href='#contact'], .cost-section .cost-info > a[href='#contact'], .fixed-cta a:first-child[href='#contact']",
   ".contact-copy",
   24
 );
