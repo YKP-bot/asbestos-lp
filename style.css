@@ -2205,18 +2205,31 @@ details.is-closing p{
   font-size:clamp(12px,1vw,14px);
   font-weight:900;
   line-height:1.2;
+  text-align:center;
+  white-space:normal;
   letter-spacing:0;
   white-space:nowrap;
   box-shadow:0 16px 34px rgba(19,181,170,.22);
+}
+.footer-contact .footer-cta .footer-cta-main,
+.footer-contact .footer-cta .footer-cta-hours{
+  display:inline;
+  color:inherit;
+  font:inherit;
+  letter-spacing:inherit;
 }
 .footer-contact .footer-response-note{
   margin-top:8px;
   text-align:center;
 }
-@media (min-width:641px) and (max-width:1023px){
-  .footer-cta{
-    padding-inline:2px;
-    font-size:clamp(9px,1.4vw,12px);
+@media (min-width:641px) and (max-width:1024px){
+  .footer-contact .footer-cta{
+    min-height:48px;
+    padding:5px 8px;
+    flex-direction:column;
+    gap:0;
+    font-size:12px;
+    line-height:1.25;
   }
 }
 .footer-address{
