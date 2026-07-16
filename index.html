@@ -7,7 +7,7 @@
   <meta name="description" content="株式会社SAKURAIは、関東対応のアスベスト調査LPです。有資格者による適正調査、調査から除去・解体までワンストップ対応。除去工事をご依頼の場合、調査費が最大0円となる場合があります。" />
   <link rel="preload" as="image" href="images/hero/hero-main-mobile-extended-preview.webp" type="image/webp" media="(max-width:640px)" fetchpriority="high" />
   <link rel="preload" as="image" href="images/hero/hero-main-preview.webp" type="image/webp" media="(min-width:641px)" fetchpriority="high" />
-  <link rel="stylesheet" href="style.css?v=works-japan-map-accurate-xl-20260711" />
+  <link rel="stylesheet" href="style.css?v=netlify-form-20260716" />
 </head>
 
 <body>
@@ -494,7 +494,11 @@
           <img src="images/common/mobile-consult-operator.png" alt="">
         </div>
 
-        <form class="contact-form" action="send.php" method="post">
+        <form class="contact-form" name="asbestos-consultation" method="post" action="/" data-netlify="true" data-netlify-honeypot="bot-field">
+          <input type="hidden" name="form-name" value="asbestos-consultation" />
+          <p class="netlify-honeypot" aria-hidden="true">
+            <label>この項目は入力しないでください<input name="bot-field" tabindex="-1" autocomplete="off" /></label>
+          </p>
           <div class="form-head">
             <span>無料相談フォーム</span>
           </div>
@@ -649,7 +653,7 @@
     <a href="tel:0362615585">&#38651;&#35441;&#12391;&#30456;&#35527;&#12377;&#12427;</a>
   </div>
 
-  <script src="script.js?v=mobile-fixed-cta-anchor-20260711"></script>
+  <script src="script.js?v=netlify-form-20260716"></script>
 </body>
 </html>
 

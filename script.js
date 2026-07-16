@@ -136,16 +136,50 @@ document.querySelectorAll(".faq-grid details").forEach((details) => {
 });
 
 const contactForm = document.querySelector(".contact-form");
-const params = new URLSearchParams(window.location.search);
 
 if (contactForm) {
-  const sendStatus = params.get("sent");
+  const submitButton = contactForm.querySelector('button[type="submit"]');
+  const defaultButtonText = submitButton ? submitButton.textContent : "";
 
-  if (sendStatus === "1") {
-    contactForm.classList.add("is-sent");
-  } else if (sendStatus === "0") {
-    contactForm.classList.add("is-error");
-  }
+  contactForm.addEventListener("submit", async (event) => {
+    event.preventDefault();
+
+    if (!contactForm.checkValidity()) {
+      contactForm.reportValidity();
+      return;
+    }
+
+    contactForm.classList.remove("is-sent", "is-error");
+
+    if (submitButton) {
+      submitButton.disabled = true;
+      submitButton.textContent = "送信中...";
+    }
+
+    try {
+      const formData = new FormData(contactForm);
+      const response = await fetch("/", {
+        method: "POST",
+        headers: { "Content-Type": "application/x-www-form-urlencoded" },
+        body: new URLSearchParams(formData).toString(),
+      });
+
+      if (!response.ok) {
+        throw new Error(`Form submission failed: ${response.status}`);
+      }
+
+      contactForm.reset();
+      contactForm.classList.add("is-sent");
+    } catch (error) {
+      console.error(error);
+      contactForm.classList.add("is-error");
+    } finally {
+      if (submitButton) {
+        submitButton.disabled = false;
+        submitButton.textContent = defaultButtonText;
+      }
+    }
+  });
 }
 
 // Smartphone navigation: align each section heading below the fixed header.
