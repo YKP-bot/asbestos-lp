@@ -453,6 +453,111 @@ if (prefectureSearch && prefectureSearchStatus) {
   });
 }
 
+const municipalityDirectory = document.querySelector('[data-municipality-directory]');
+
+if (municipalityDirectory) {
+  const municipalitySearch = municipalityDirectory.querySelector('[data-municipality-search]');
+  const municipalitySearchStatus = municipalityDirectory.querySelector('[data-municipality-search-status]');
+  const municipalityItems = [...municipalityDirectory.querySelectorAll('[data-municipality-item]')];
+  const municipalityGroups = [...municipalityDirectory.querySelectorAll('[data-municipality-group]')];
+  const municipalityCount = Number(municipalityDirectory.dataset.municipalityCount) || municipalityItems.length;
+  const municipalityDirectoryKey = municipalityDirectory.dataset.municipalityDirectory || 'regional';
+  const mobileMunicipalityGroups = window.matchMedia('(max-width: 640px)');
+  const manuallyOpenedMunicipalityGroups = new WeakSet();
+  const normalizeMunicipalityQuery = (value) => String(value || '')
+    .normalize('NFKC')
+    .replace(/[ヶヵ]/g, 'ケ')
+    .replace(/\s+/g, '')
+    .toLocaleLowerCase('ja-JP');
+
+  const setMunicipalityGroupOpen = (group, open) => {
+    const button = group.querySelector('[data-municipality-toggle]');
+    const groupName = group.querySelector('h3')?.textContent.trim() || '自治体一覧';
+    group.classList.toggle('is-open', open);
+    if (!button) return;
+    button.textContent = open ? '−' : '+';
+    button.setAttribute('aria-expanded', String(open));
+    button.setAttribute('aria-label', `${groupName}を${open ? '閉じる' : '開く'}`);
+  };
+
+  municipalityGroups.forEach((group, index) => {
+    const header = group.querySelector(':scope > header');
+    const groupName = group.querySelector('h3')?.textContent.trim() || '自治体一覧';
+    const contentId = `${municipalityDirectoryKey}-municipality-group-content-${index + 1}`;
+    const description = group.querySelector(':scope > p');
+    const grid = group.querySelector(':scope > .tokyo-municipality-grid');
+    if (!header || !description || !grid) return;
+
+    grid.id = contentId;
+
+    const button = document.createElement('button');
+    button.type = 'button';
+    button.className = 'tokyo-municipality-toggle';
+    button.dataset.municipalityToggle = '';
+    button.setAttribute('aria-expanded', 'false');
+    button.setAttribute('aria-controls', contentId);
+    button.setAttribute('aria-label', `${groupName}を開く`);
+    button.textContent = '+';
+    group.classList.add('is-collapsible');
+    header.append(button);
+
+    button.addEventListener('click', () => {
+      const open = !group.classList.contains('is-open');
+      if (open) manuallyOpenedMunicipalityGroups.add(group);
+      else manuallyOpenedMunicipalityGroups.delete(group);
+      setMunicipalityGroupOpen(group, open);
+    });
+  });
+
+  const openMunicipalityGroupFromHash = () => {
+    if (!mobileMunicipalityGroups.matches || !window.location.hash) return;
+    const target = document.getElementById(decodeURIComponent(window.location.hash.slice(1)));
+    if (!target?.matches('[data-municipality-group]') || !municipalityDirectory.contains(target)) return;
+    manuallyOpenedMunicipalityGroups.add(target);
+    setMunicipalityGroupOpen(target, true);
+  };
+
+  openMunicipalityGroupFromHash();
+  window.addEventListener('hashchange', openMunicipalityGroupFromHash);
+
+  const filterMunicipalities = () => {
+    const currentSearchValue = municipalitySearch?.value || '';
+    const query = normalizeMunicipalityQuery(currentSearchValue);
+    let visibleCount = 0;
+
+    municipalityItems.forEach((item) => {
+      const visible = !query || normalizeMunicipalityQuery(item.dataset.municipalityName).includes(query);
+      item.hidden = !visible;
+      if (visible) visibleCount += 1;
+    });
+
+    municipalityGroups.forEach((group) => {
+      const hasVisibleItem = Boolean(group.querySelector('[data-municipality-item]:not([hidden])'));
+      group.hidden = !hasVisibleItem;
+      if (!mobileMunicipalityGroups.matches) return;
+      if (query && hasVisibleItem) setMunicipalityGroupOpen(group, true);
+      else if (!query && !manuallyOpenedMunicipalityGroups.has(group)) setMunicipalityGroupOpen(group, false);
+    });
+
+    if (municipalitySearchStatus) {
+      municipalitySearchStatus.textContent = query
+        ? `「${currentSearchValue.trim()}」に一致する自治体：${visibleCount}件`
+        : `${municipalityCount}自治体を表示しています`;
+    }
+  };
+
+  municipalitySearch?.addEventListener('input', filterMunicipalities);
+  const handleMunicipalityBreakpointChange = () => {
+    filterMunicipalities();
+    openMunicipalityGroupFromHash();
+  };
+  if (typeof mobileMunicipalityGroups.addEventListener === 'function') {
+    mobileMunicipalityGroups.addEventListener('change', handleMunicipalityBreakpointChange);
+  } else if (typeof mobileMunicipalityGroups.addListener === 'function') {
+    mobileMunicipalityGroups.addListener(handleMunicipalityBreakpointChange);
+  }
+}
+
 const articleDetail = document.querySelector('.article-detail');
 
 if (articleDetail) {

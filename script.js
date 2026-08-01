@@ -270,3 +270,174 @@ setupMobileCtaScroll(
   ".contact-form",
   12
 );
+
+// Carry a short-lived assessment summary from /asbestos/check/ into the
+// inquiry form. sessionStorage keeps the handoff in the current tab only.
+(() => {
+  const storageKey = "ASBESTOS_CHECK_HANDOFF_V1";
+  const maxRawLength = 8192;
+  const maxAgeMilliseconds = 10 * 60 * 1000;
+  const allowedSimilarity = new Set(["低", "中", "高", "判定不能"]);
+  const allowedConfidence = new Set(["低", "中", "高"]);
+  const inputLabels = {
+    constructionYear: "建築年・施工年",
+    renovationYear: "改修年",
+    location: "撮影部位・建材種類",
+    environment: "屋内・屋外",
+    workPlan: "工事予定",
+    productInfo: "メーカー・製品情報"
+  };
+
+  const isRecord = (value) => (
+    value !== null &&
+    typeof value === "object" &&
+    !Array.isArray(value)
+  );
+
+  const normalizeSingleLine = (value, maxLength) => {
+    if (typeof value !== "string") return "";
+
+    return value
+      .replace(/[\u0000-\u001f\u007f]/g, " ")
+      .replace(/\s+/g, " ")
+      .trim()
+      .slice(0, maxLength);
+  };
+
+  let handoff = null;
+
+  try {
+    const raw = window.sessionStorage.getItem(storageKey);
+
+    if (!raw || raw.length > maxRawLength) {
+      return;
+    }
+
+    const parsed = JSON.parse(raw);
+    const now = Date.now();
+
+    if (
+      !isRecord(parsed) ||
+      parsed.version !== 1 ||
+      parsed.source !== "asbestos-check" ||
+      !Number.isFinite(parsed.createdAt) ||
+      parsed.createdAt > now + 60 * 1000 ||
+      now - parsed.createdAt > maxAgeMilliseconds ||
+      !isRecord(parsed.result)
+    ) {
+      return;
+    }
+
+    const recommendationScore = parsed.result.recommendationScore;
+    const similarity = parsed.result.similarity;
+    const confidence = parsed.result.confidence;
+    const isScoreValid = (
+      recommendationScore === null ||
+      (
+        Number.isInteger(recommendationScore) &&
+        recommendationScore >= 1 &&
+        recommendationScore <= 5
+      )
+    );
+
+    if (
+      !isScoreValid ||
+      !allowedSimilarity.has(similarity) ||
+      !allowedConfidence.has(confidence)
+    ) {
+      return;
+    }
+
+    handoff = {
+      recommendationScore,
+      similarity,
+      confidence,
+      summary: normalizeSingleLine(parsed.result.summary, 160),
+      inputs: isRecord(parsed.inputs) ? parsed.inputs : {}
+    };
+  } catch (_error) {
+    handoff = null;
+  } finally {
+    try {
+      window.sessionStorage.removeItem(storageKey);
+    } catch (_error) {
+      // Storage can be unavailable in privacy-restricted browser contexts.
+    }
+  }
+
+  if (!handoff || !contactForm) return;
+
+  const messageField = contactForm.querySelector("textarea[name='message']");
+  if (!messageField) return;
+
+  const scoreText = handoff.recommendationScore === null
+    ? "判定不能"
+    : [
+      ...Array(handoff.recommendationScore).fill("⚠"),
+      ...Array(5 - handoff.recommendationScore).fill("△")
+    ].join(" ");
+
+  const summaryLines = [
+    "【アスベスト調査推奨度チェック結果】",
+    `調査推奨度：${scoreText}`,
+    `画像上の類似度：${handoff.similarity}`,
+    `判定の確信度：${handoff.confidence}`
+  ];
+
+  if (handoff.summary) {
+    summaryLines.push("", handoff.summary);
+  }
+
+  const suppliedInputs = Object.entries(inputLabels)
+    .map(([key, label]) => {
+      const value = normalizeSingleLine(handoff.inputs[key], 120);
+      return value && value !== "わからない" ? `${label}：${value}` : "";
+    })
+    .filter(Boolean);
+
+  if (suppliedInputs.length > 0) {
+    summaryLines.push("", "【入力情報】", ...suppliedInputs);
+  }
+
+  summaryLines.push("", "※写真は問い合わせフォームへ引き継がれていません。");
+
+  const assessmentSummary = summaryLines.join("\n");
+  const existingMessage = messageField.value.trim();
+  messageField.value = existingMessage
+    ? `${assessmentSummary}\n\n${existingMessage}`
+    : assessmentSummary;
+  messageField.dispatchEvent(new Event("input", { bubbles:true }));
+
+  const moveToForm = () => {
+    const headerOffset = window.matchMedia("(max-width:640px)").matches ? 80 : 24;
+    const targetTop = Math.max(
+      0,
+      window.scrollY + contactForm.getBoundingClientRect().top - headerOffset
+    );
+    const prefersReducedMotion = window.matchMedia(
+      "(prefers-reduced-motion: reduce)"
+    ).matches;
+
+    window.history.replaceState(null, "", "#contact");
+    window.scrollTo({
+      top:targetTop,
+      behavior:prefersReducedMotion ? "auto" : "smooth"
+    });
+
+    window.requestAnimationFrame(() => {
+      try {
+        messageField.focus({ preventScroll:true });
+      } catch (_error) {
+        messageField.focus();
+      }
+    });
+  };
+
+  if (document.readyState === "complete") {
+    window.requestAnimationFrame(moveToForm);
+  } else {
+    window.addEventListener("load", () => {
+      window.requestAnimationFrame(moveToForm);
+    }, { once:true });
+  }
+})();
