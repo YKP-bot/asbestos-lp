@@ -462,7 +462,6 @@ if (municipalityDirectory) {
   const municipalityGroups = [...municipalityDirectory.querySelectorAll('[data-municipality-group]')];
   const municipalityCount = Number(municipalityDirectory.dataset.municipalityCount) || municipalityItems.length;
   const municipalityDirectoryKey = municipalityDirectory.dataset.municipalityDirectory || 'regional';
-  const mobileMunicipalityGroups = window.matchMedia('(max-width: 640px)');
   const manuallyOpenedMunicipalityGroups = new WeakSet();
   const normalizeMunicipalityQuery = (value) => String(value || '')
     .normalize('NFKC')
@@ -483,11 +482,13 @@ if (municipalityDirectory) {
   municipalityGroups.forEach((group, index) => {
     const header = group.querySelector(':scope > header');
     const groupName = group.querySelector('h3')?.textContent.trim() || '自治体一覧';
+    const descriptionId = `${municipalityDirectoryKey}-municipality-group-description-${index + 1}`;
     const contentId = `${municipalityDirectoryKey}-municipality-group-content-${index + 1}`;
     const description = group.querySelector(':scope > p');
     const grid = group.querySelector(':scope > .tokyo-municipality-grid');
     if (!header || !description || !grid) return;
 
+    description.id = descriptionId;
     grid.id = contentId;
 
     const button = document.createElement('button');
@@ -495,7 +496,7 @@ if (municipalityDirectory) {
     button.className = 'tokyo-municipality-toggle';
     button.dataset.municipalityToggle = '';
     button.setAttribute('aria-expanded', 'false');
-    button.setAttribute('aria-controls', contentId);
+    button.setAttribute('aria-controls', `${descriptionId} ${contentId}`);
     button.setAttribute('aria-label', `${groupName}を開く`);
     button.textContent = '+';
     group.classList.add('is-collapsible');
@@ -510,7 +511,7 @@ if (municipalityDirectory) {
   });
 
   const openMunicipalityGroupFromHash = () => {
-    if (!mobileMunicipalityGroups.matches || !window.location.hash) return;
+    if (!window.location.hash) return;
     const target = document.getElementById(decodeURIComponent(window.location.hash.slice(1)));
     if (!target?.matches('[data-municipality-group]') || !municipalityDirectory.contains(target)) return;
     manuallyOpenedMunicipalityGroups.add(target);
@@ -534,7 +535,6 @@ if (municipalityDirectory) {
     municipalityGroups.forEach((group) => {
       const hasVisibleItem = Boolean(group.querySelector('[data-municipality-item]:not([hidden])'));
       group.hidden = !hasVisibleItem;
-      if (!mobileMunicipalityGroups.matches) return;
       if (query && hasVisibleItem) setMunicipalityGroupOpen(group, true);
       else if (!query && !manuallyOpenedMunicipalityGroups.has(group)) setMunicipalityGroupOpen(group, false);
     });
@@ -547,15 +547,6 @@ if (municipalityDirectory) {
   };
 
   municipalitySearch?.addEventListener('input', filterMunicipalities);
-  const handleMunicipalityBreakpointChange = () => {
-    filterMunicipalities();
-    openMunicipalityGroupFromHash();
-  };
-  if (typeof mobileMunicipalityGroups.addEventListener === 'function') {
-    mobileMunicipalityGroups.addEventListener('change', handleMunicipalityBreakpointChange);
-  } else if (typeof mobileMunicipalityGroups.addListener === 'function') {
-    mobileMunicipalityGroups.addListener(handleMunicipalityBreakpointChange);
-  }
 }
 
 const articleDetail = document.querySelector('.article-detail');

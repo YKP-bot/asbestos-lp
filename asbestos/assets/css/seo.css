@@ -405,6 +405,7 @@ body.is-search-open { overflow: hidden; }
 .area-section-heading { max-width: 950px; margin: 0 0 clamp(20px,2.8vw,46px); }
 .area-section-heading > p { margin: 0 0 5px; color: #0b5795; font-size: clamp(8px,.7vw,12px); font-weight: 900; letter-spacing: .17em; }
 .area-section-heading h2 { margin: 0; color: #073363; font-size: clamp(25px,2.8vw,50px); line-height: 1.35; }
+.area-heading-keep { white-space: nowrap; }
 .area-section-heading > span { display: block; margin-top: clamp(8px,.9vw,15px); color: #5a6e82; font-size: clamp(10px,.85vw,15px); line-height: 1.8; }
 .area-difference-grid { display: grid; grid-template-columns: repeat(4,minmax(0,1fr)); gap: clamp(8px,1.2vw,20px); }
 .area-difference-grid article { min-width: 0; padding: clamp(15px,1.7vw,29px); border: 1px solid #d5e0eb; border-top: 4px solid #0b5795; border-radius: 5px; background: #fff; box-shadow: 0 8px 24px rgba(9,48,86,.06); }
@@ -2169,11 +2170,15 @@ body.is-search-open { overflow: hidden; }
 .tokyo-municipality-groups { display: grid; gap: clamp(20px,2.6vw,42px); }
 .tokyo-municipality-group { scroll-margin-top: 78px; padding: clamp(18px,2.2vw,36px); border: 1px solid #d3e0ea; border-radius: 9px; background: linear-gradient(135deg,#fbfdff,#f3f8fb); }
 .tokyo-municipality-group[hidden],.tokyo-municipality-card[hidden] { display: none !important; }
-.tokyo-municipality-group > header { display: flex; align-items: flex-end; justify-content: space-between; gap: 16px; padding-bottom: 13px; border-bottom: 2px solid #dbe7ef; }
+.tokyo-municipality-group > header { display: grid; grid-template-columns: minmax(0,1fr) auto 40px; align-items: center; gap: 16px; padding-bottom: 0; border-bottom: 0; }
+.tokyo-municipality-group.is-open > header { padding-bottom: 13px; border-bottom: 2px solid #dbe7ef; }
 .tokyo-municipality-group > header p { margin: 0 0 3px; color: #0b5795; font-size: clamp(8px,.6vw,10px); font-weight: 900; letter-spacing: .14em; }
 .tokyo-municipality-group > header h3 { margin: 0; color: #073d70; font-size: clamp(20px,1.7vw,30px); }
 .tokyo-municipality-group > header span { color: #506b81; font-size: clamp(9px,.7vw,12px); font-weight: 900; }
-.tokyo-municipality-toggle { display: none; }
+.tokyo-municipality-toggle { width: 40px; height: 40px; display: grid; place-items: center; padding: 0 0 2px; border: 2px solid #0b5795; border-radius: 50%; color: #0b5795; background: #fff; font: inherit; font-size: 22px; font-weight: 800; line-height: 1; cursor: pointer; transition: color .18s ease,background .18s ease,transform .18s ease; }
+.tokyo-municipality-toggle:hover { color: #fff; background: #0b5795; }
+.tokyo-municipality-toggle:focus-visible { outline: 3px solid rgba(11,87,149,.22); outline-offset: 2px; }
+.tokyo-municipality-group.is-collapsible:not(.is-open) > p,.tokyo-municipality-group.is-collapsible:not(.is-open) > .tokyo-municipality-grid { display: none; }
 .tokyo-municipality-group > p { max-width: 940px; margin: 14px 0 18px; color: #52697d; font-size: clamp(10px,.78vw,13px); line-height: 1.85; }
 .tokyo-municipality-grid { display: grid; grid-template-columns: repeat(3,minmax(0,1fr)); gap: clamp(8px,1vw,15px); }
 .tokyo-municipality-card { min-width: 0; display: grid; grid-template-columns: clamp(82px,7.5vw,126px) minmax(0,1fr) 12px; align-items: center; gap: 10px; overflow: hidden; padding: 8px 11px 8px 8px; border: 1px solid #d5e1ea; border-radius: 7px; color: inherit; background: #fff; box-shadow: 0 4px 14px rgba(4,51,91,.04); text-decoration: none; transition: transform .18s ease,border-color .18s ease,box-shadow .18s ease; }
