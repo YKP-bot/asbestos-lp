@@ -559,8 +559,34 @@ if (articleDetail) {
   const articleBody = articleDetail.querySelector('.article-body');
   const mobileArticleQuery = window.matchMedia('(max-width: 640px)');
   const compactArticleQuery = window.matchMedia('(max-width: 440px)');
+  const desktopArticleQuery = window.matchMedia('(min-width: 1024px)');
+  const railFollowCta = document.querySelector('.article-follow-cta--rail');
+  const floatingFollowCta = document.querySelector('.article-follow-cta--floating');
+  const earlyFollowMarker = articleBody?.querySelector('[data-cta-position="early"]');
   const printableDetails = [...articleDetail.querySelectorAll('details')];
   let printableDetailStates = [];
+
+  const setFollowCtaVisibility = (element, visible) => {
+    if (!element) return;
+    const currentlyVisible = element.classList.contains('is-visible');
+    if (currentlyVisible === visible && element.getAttribute('aria-hidden') === String(!visible)) return;
+    element.classList.toggle('is-visible', visible);
+    element.setAttribute('aria-hidden', String(!visible));
+    element.querySelectorAll('a,button').forEach((control) => {
+      if (visible) control.removeAttribute('tabindex');
+      else control.tabIndex = -1;
+    });
+  };
+
+  const syncFloatingFollowCtaHeight = () => {
+    if (!floatingFollowCta || !mobileArticleQuery.matches) return;
+    const height = Math.ceil(floatingFollowCta.getBoundingClientRect().height);
+    if (height > 0) document.documentElement.style.setProperty('--article-follow-cta-height', `${height}px`);
+  };
+
+  if (floatingFollowCta && 'ResizeObserver' in window) {
+    new ResizeObserver(syncFloatingFollowCtaHeight).observe(floatingFollowCta);
+  }
 
   window.addEventListener('beforeprint', () => {
     printableDetailStates = printableDetails.map((item) => item.open);
@@ -841,8 +867,21 @@ if (articleDetail) {
       const progressRange = Math.max(1, articleBottom - articleTop - window.innerHeight);
       const progress = Math.min(1, Math.max(0, (window.scrollY - articleTop) / progressRange));
       const readingEndThreshold = articleBottom - Math.min(320, window.innerHeight * .38);
-      const toolsVisible = window.scrollY > articleTop + Math.min(480, window.innerHeight * .55)
+      const followEndThreshold = articleBottom - Math.min(440, window.innerHeight * .5);
+      const interfaceBlocked = document.body.classList.contains('is-nav-open')
+        || document.body.classList.contains('nav-open')
+        || document.body.classList.contains('is-search-open');
+      const toolsVisible = !interfaceBlocked
+        && window.scrollY > articleTop + Math.min(480, window.innerHeight * .55)
         && window.scrollY < readingEndThreshold;
+      const followStart = earlyFollowMarker
+        ? window.scrollY + earlyFollowMarker.getBoundingClientRect().bottom + 20
+        : articleTop + Math.min(640, window.innerHeight * .75);
+      const followVisible = !interfaceBlocked
+        && window.scrollY > followStart
+        && window.scrollY < followEndThreshold;
+      const railFollowVisible = followVisible && desktopArticleQuery.matches;
+      const floatingFollowVisible = followVisible && !desktopArticleQuery.matches;
       const headingThreshold = Math.max(96, window.innerHeight * .22);
       let activeHeading;
       articleSections.forEach((heading) => {
@@ -853,6 +892,10 @@ if (articleDetail) {
       readingProgressBar.style.width = `${progress * 100}%`;
       readingProgress.classList.toggle('is-active', progress > 0 && progress < 1);
       readingTools.classList.toggle('is-visible', toolsVisible);
+      setFollowCtaVisibility(railFollowCta, railFollowVisible);
+      setFollowCtaVisibility(floatingFollowCta, floatingFollowVisible);
+      document.body.classList.toggle('article-follow-cta-visible', floatingFollowVisible && mobileArticleQuery.matches);
+      if (floatingFollowVisible) syncFloatingFollowCtaHeight();
       sideTocLinks.forEach((link) => {
         const current = Boolean(activeHeading && link.dataset.articleTocLink === activeHeading.id);
         link.classList.toggle('is-current', current);
@@ -870,6 +913,9 @@ if (articleDetail) {
     window.addEventListener('resize', requestProgressUpdate, { passive: true });
     window.addEventListener('hashchange', requestProgressUpdate);
     window.addEventListener('load', requestProgressUpdate, { once: true });
+    if ('MutationObserver' in window) {
+      new MutationObserver(requestProgressUpdate).observe(document.body, { attributes:true, attributeFilter:['class'] });
+    }
     updateReadingProgress();
     window.setTimeout(requestProgressUpdate, 0);
     window.setTimeout(requestProgressUpdate, 250);

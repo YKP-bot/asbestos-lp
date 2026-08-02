@@ -2227,6 +2227,37 @@ body.is-search-open { overflow: hidden; }
 .municipality-local-context aside { background: #edf6fb; }
 .municipality-local-context aside strong { color: #0c4779; font-size: clamp(13px,1vw,17px); }
 .municipality-local-context aside ul { margin: 14px 0 0; padding-left: 1.2em; color: #4f687e; font-size: clamp(9px,.7vw,12px); line-height: 1.9; }
+.municipality-local-cases ol { display: grid; gap: 12px; list-style: none; margin: 15px 0 0; padding: 0; }
+.municipality-local-cases li { min-width: 0; display: grid; grid-template-columns: 28px minmax(0,1fr); gap: 10px; padding-top: 12px; border-top: 1px solid #cadde9; }
+.municipality-local-cases li:first-child { padding-top: 0; border-top: 0; }
+.municipality-local-cases li > b { width: 27px; height: 27px; display: grid; place-items: center; border-radius: 50%; color: #fff; background: #0b5795; font-size: 8px; }
+.municipality-local-cases li strong { color: #123f67; font-size: clamp(10px,.76vw,13px); line-height: 1.55; }
+.municipality-local-cases li p { margin: 5px 0 0 !important; font-size: clamp(8px,.65vw,11px) !important; line-height: 1.75 !important; }
+.regional-housing-data { scroll-margin-top: 78px; }
+.area-prefecture-content > .seo-container > .regional-housing-data { margin-top: clamp(38px,5vw,86px); }
+.regional-housing-grid { display: grid; grid-template-columns: minmax(0,1.45fr) minmax(280px,.55fr); gap: 12px; }
+.regional-housing-form,.regional-stat-card { min-width: 0; padding: clamp(20px,2.3vw,38px); border: 1px solid #ccdae6; border-radius: 9px; background: #fff; box-shadow: 0 10px 28px rgba(4,48,87,.05); }
+.regional-housing-form { display: grid; grid-template-columns: minmax(220px,.75fr) minmax(320px,1.25fr); align-items: center; gap: clamp(22px,3vw,50px); }
+.regional-housing-form > div > span,.regional-stat-card > span { color: #0b5795; font-size: clamp(8px,.62vw,10px); font-weight: 900; letter-spacing: .07em; }
+.regional-housing-form h3,.regional-stat-card h3 { margin: 7px 0 0; color: #103e68; font-size: clamp(16px,1.35vw,24px); line-height: 1.5; }
+.regional-housing-form > div > p { margin: 11px 0 0; color: #526a7e; font-size: clamp(9px,.72vw,12px); line-height: 1.85; }
+.regional-housing-form > div > p strong { color: #074b80; font-size: 1.16em; }
+.regional-housing-form ul { display: grid; gap: 12px; list-style: none; margin: 0; padding: 0; }
+.regional-housing-form li > div { display: flex; justify-content: space-between; gap: 10px; color: #234861; font-size: clamp(9px,.7vw,12px); font-weight: 900; }
+.regional-housing-form li > i { height: 8px; display: block; overflow: hidden; margin-top: 5px; border-radius: 999px; background: #e5edf3; }
+.regional-housing-form li > i > em { height: 100%; display: block; border-radius: inherit; background: linear-gradient(90deg,#0b5795,#27a5b7); }
+.regional-housing-form li > small { display: block; margin-top: 4px; color: #738697; font-size: clamp(7px,.57vw,9px); text-align: right; }
+.regional-stat-card { display: flex; flex-direction: column; justify-content: center; border-top: 4px solid #0b5795; }
+.regional-stat-card > strong { margin-top: 8px; color: #073d70; font-size: clamp(34px,3.2vw,56px); line-height: 1; }
+.regional-stat-card > strong small { margin-left: 3px; font-size: .42em; }
+.regional-stat-card > p { margin: 10px 0 0; color: #5b7083; font-size: clamp(9px,.68vw,11px); line-height: 1.75; }
+.regional-stat-card.is-unavailable { border-top-color: #8aa0b0; background: #f8fafc; }
+.regional-stat-card.is-unavailable > strong { color: #647a8d; font-size: clamp(25px,2vw,34px); }
+.regional-stat-note { display: grid; grid-template-columns: auto minmax(0,1fr) auto; align-items: center; gap: 16px; margin-top: 11px; padding: 14px 17px; border-left: 4px solid #0b5795; color: #536a7e; background: #eaf3f8; }
+.regional-stat-note > strong { color: #103f68; font-size: clamp(10px,.76vw,13px); white-space: nowrap; }
+.regional-stat-note > p { margin: 0; font-size: clamp(8px,.64vw,11px); line-height: 1.75; }
+.regional-stat-note > div { display: flex; flex-direction: column; gap: 5px; }
+.regional-stat-note a { color: #0b5795; font-size: clamp(8px,.62vw,10px); font-weight: 900; white-space: nowrap; }
 .municipality-office-grid { display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); gap: 12px; }
 .municipality-office-grid article { padding: clamp(20px,2.2vw,36px); border: 1px solid #d0dee9; border-top: 4px solid #0b5795; border-radius: 7px; background: #fff; }
 .municipality-office-grid article > span { color: #0b5795; font-size: clamp(8px,.6vw,10px); font-weight: 900; letter-spacing: .08em; }
@@ -2273,6 +2304,7 @@ body.is-search-open { overflow: hidden; }
 
 @media (min-width:641px) and (max-width:900px) {
   .municipality-hero .mobile-only-break { display: initial; }
+  .regional-housing-form { grid-template-columns: 1fr; gap: 17px; }
 }
 
 @media (max-width:640px) {
@@ -2323,6 +2355,27 @@ body.is-search-open { overflow: hidden; }
   .municipality-local-context p:not(.area-mini-kicker) { font-size: 10px; }
   .municipality-local-context aside strong { font-size: 13px; }
   .municipality-local-context aside ul { font-size: 10px; }
+  .municipality-local-cases ol { gap: 10px; margin-top: 12px; }
+  .municipality-local-cases li { grid-template-columns: 26px minmax(0,1fr); gap: 9px; padding-top: 10px; }
+  .municipality-local-cases li > b { width: 25px; height: 25px; }
+  .municipality-local-cases li strong { font-size: 11px; }
+  .municipality-local-cases li p { font-size: 9px !important; }
+  .regional-housing-data { scroll-margin-top: 58px; }
+  .area-prefecture-content > .seo-container > .regional-housing-data { margin-top: 34px; }
+  .regional-housing-grid { grid-template-columns: 1fr; gap: 8px; }
+  .regional-housing-form,.regional-stat-card { padding: 15px; border-radius: 7px; }
+  .regional-housing-form { grid-template-columns: 1fr; gap: 17px; }
+  .regional-housing-form h3,.regional-stat-card h3 { font-size: 17px; }
+  .regional-housing-form > div > p { font-size: 10px; }
+  .regional-housing-form li > div { font-size: 10px; }
+  .regional-housing-form li > i { height: 7px; }
+  .regional-stat-card > strong { font-size: 38px; }
+  .regional-stat-card > p { font-size: 10px; }
+  .regional-stat-note { grid-template-columns: 1fr; gap: 7px; margin-top: 8px; padding: 13px; }
+  .regional-stat-note > strong { font-size: 11px; }
+  .regional-stat-note > p { font-size: 9px; }
+  .regional-stat-note > div { align-items: flex-start; }
+  .regional-stat-note a { font-size: 9px; white-space: normal; }
   .municipality-office-grid { grid-template-columns: 1fr; gap: 8px; }
   .municipality-office-grid article { padding: 15px; }
   .municipality-office-grid h3 { font-size: 17px; }
@@ -2372,6 +2425,7 @@ body.is-search-open { overflow: hidden; }
   .reading-progress,
   .article-reading-tools,
   .reading-tools,
+  .article-follow-cta,
   .article-reading-toc,
   .reading-toc-panel {
     display: none !important;
@@ -2632,6 +2686,67 @@ body.is-search-open { overflow: hidden; }
   text-decoration: none;
 }
 
+.article-follow-cta {
+  box-sizing: border-box;
+  margin: 0;
+  border: 1px solid rgba(255,255,255,.22);
+  border-radius: 12px;
+  color: #fff;
+  background: linear-gradient(145deg,#06396c 0%,#0a4c83 100%);
+  box-shadow: 0 14px 34px rgba(1,37,73,.2);
+}
+.article-follow-cta--rail,
+.article-follow-cta--floating { display: none; }
+.article-follow-cta-copy { min-width: 0; }
+.article-follow-cta-copy > span {
+  display: block;
+  margin-bottom: 5px;
+  color: #ffe06a;
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: .04em;
+}
+.article-follow-cta-copy > strong {
+  display: block;
+  color: #fff;
+  font-size: 14px;
+  line-height: 1.55;
+}
+.article-follow-cta-title-tail { white-space: nowrap; }
+.article-follow-cta > a {
+  min-height: 46px;
+  display: flex !important;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 10px 13px !important;
+  border: 1px solid #ffd52f;
+  border-radius: 7px;
+  color: #072f59 !important;
+  background: #ffd52f;
+  box-shadow: 0 7px 16px rgba(0,21,48,.18);
+  font-size: 12px;
+  font-weight: 900;
+  line-height: 1.45;
+  text-align: center;
+  text-decoration: none;
+}
+.article-follow-cta > a:hover {
+  color: #062847 !important;
+  background: #ffe16a;
+  border-color: #ffe16a;
+}
+.article-follow-cta > a:focus-visible {
+  outline: 3px solid rgba(255,213,47,.42);
+  outline-offset: 3px;
+}
+.article-follow-cta > a b {
+  flex: 0 0 auto;
+  font-size: 18px;
+  line-height: 1;
+}
+.article-follow-cta-mobile-label { display: none; }
+
 .source-groups { display: grid; gap: 8px; }
 .source-group {
   border: 1px solid #d7e2ec;
@@ -2753,6 +2868,16 @@ body.is-search-open { overflow: hidden; }
   .article-page .article-side-related {
     flex: 0 0 auto;
   }
+  .article-page .article-follow-cta--rail.is-visible {
+    flex: 0 0 auto;
+    display: grid;
+    gap: 12px;
+    padding: 16px;
+  }
+}
+
+@media (min-width:1024px) and (max-height:680px) {
+  .article-page .article-side-related { display: none; }
 }
 
 @media (min-width:641px) and (max-width:1023px) {
@@ -2783,6 +2908,27 @@ body.is-search-open { overflow: hidden; }
     width: 64px;
     height: 52px;
   }
+  .article-follow-cta--floating {
+    position: fixed;
+    right: 18px;
+    bottom: 18px;
+    z-index: 160;
+    width: min(332px,calc(100vw - 36px));
+    display: grid;
+    gap: 12px;
+    padding: 16px;
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+    transform: translateY(14px);
+    transition: opacity .2s ease,visibility .2s ease,transform .2s ease;
+  }
+  .article-follow-cta--floating.is-visible {
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
+    transform: none;
+  }
 }
 
 @media (max-width:640px) {
@@ -2791,8 +2937,9 @@ body.is-search-open { overflow: hidden; }
     gap: 0;
   }
   .article-title-main,
-  .article-title-detail { display: block; }
-  .article-title-divider { display: none; }
+  .article-title-divider,
+  .article-title-detail { display: inline; }
+  .article-page .article-header h1 { text-wrap: wrap; }
   .article-page .article-table-block > .table-scroll-hint,
   .article-page .article-table-block > .article-table-scroll-hint {
     width: 100%;
@@ -2830,13 +2977,71 @@ body.is-search-open { overflow: hidden; }
     opacity: 0;
     pointer-events: none;
     transform: translateY(10px);
-    transition: opacity .18s ease,transform .18s ease;
+    transition: bottom .18s ease,opacity .18s ease,transform .18s ease;
   }
   .article-reading-tools.is-visible {
     opacity: 1;
     pointer-events: auto;
     transform: none;
   }
+  body.article-follow-cta-visible .article-reading-tools {
+    bottom: calc(var(--article-follow-cta-height,80px) + 22px + env(safe-area-inset-bottom));
+  }
+  .article-follow-cta--floating {
+    position: fixed;
+    right: 8px;
+    bottom: calc(8px + env(safe-area-inset-bottom));
+    left: 8px;
+    z-index: 160;
+    min-height: 72px;
+    display: grid;
+    grid-template-columns: minmax(0,1fr) auto;
+    align-items: center;
+    gap: 9px;
+    padding: 10px 10px 10px 14px;
+    border-radius: 14px;
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+    transform: translateY(calc(100% + 18px));
+    transition: opacity .2s ease,visibility .2s ease,transform .2s ease;
+  }
+  .article-follow-cta--floating.is-visible {
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
+    transform: none;
+  }
+  .article-follow-cta--floating .article-follow-cta-copy > span {
+    margin-bottom: 3px;
+    font-size: 9px;
+  }
+  .article-follow-cta--floating .article-follow-cta-copy > strong {
+    display: -webkit-box;
+    overflow: hidden;
+    font-size: clamp(12px,3.45vw,14px);
+    line-height: 1.45;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+  }
+  .article-follow-cta--floating > a {
+    min-width: 104px;
+    min-height: 50px;
+    gap: 6px;
+    padding: 8px 11px !important;
+    font-size: 12px;
+    white-space: nowrap;
+  }
+  .article-follow-cta--floating .article-follow-cta-label { display: none; }
+  .article-follow-cta--floating .article-follow-cta-mobile-label { display: inline; }
+}
+
+body.is-nav-open .article-follow-cta--floating,
+body.nav-open .article-follow-cta--floating,
+body.is-search-open .article-follow-cta--floating {
+  opacity: 0 !important;
+  visibility: hidden !important;
+  pointer-events: none !important;
 }
 
 @media print {

@@ -226,7 +226,7 @@ const setupMobileCtaScroll = (selector, targetSelector, targetGap) => {
 };
 
 setupMobileCtaScroll(
-  ".hero-actions .btn-primary[href='#contact'], .law-button[href='#contact'], .problem-section .solution-card a[href='#contact'], .cost-section .cost-info > a[href='#contact'], .fixed-cta a:first-child[href='#contact']",
+  "a[href='#contact']:not(.mobile-contact-primary):not(.footer-cta)",
   ".contact-copy",
   24
 );
@@ -236,6 +236,81 @@ setupMobileCtaScroll(
   ".contact-form",
   12
 );
+
+let cancelInitialMobileContactHashAlignment = () => {};
+
+// Native cross-page fragment navigation places #contact behind the fixed
+// mobile header. Align the contact intro exactly like same-page CTA clicks,
+// and keep it aligned while responsive assets finish laying out.
+const alignInitialMobileContactHash = () => {
+  if (
+    window.location.hash !== "#contact" ||
+    !window.matchMedia("(max-width:640px)").matches
+  ) {
+    return;
+  }
+
+  const target = document.querySelector(".contact-copy");
+  if (!target) return;
+
+  let userInterrupted = false;
+  let layoutObserver = null;
+  const stopAutomaticAlignment = () => {
+    userInterrupted = true;
+    if (layoutObserver) layoutObserver.disconnect();
+  };
+  cancelInitialMobileContactHashAlignment = stopAutomaticAlignment;
+
+  ["touchstart", "pointerdown", "wheel", "keydown"].forEach((eventName) => {
+    window.addEventListener(eventName, stopAutomaticAlignment, {
+      once: true,
+      passive: true
+    });
+  });
+
+  const align = () => {
+    if (userInterrupted || window.location.hash !== "#contact") return;
+
+    const scrolledHeaderHeight = 68;
+    const targetGap = 24;
+    const targetTop = Math.max(
+      0,
+      getLayoutDocumentTop(target) - scrolledHeaderHeight - targetGap
+    );
+
+    window.scrollTo({ top: targetTop, behavior: "auto" });
+  };
+
+  const alignAfterLayout = () => {
+    window.requestAnimationFrame(() => {
+      window.requestAnimationFrame(align);
+    });
+
+    if (document.fonts && document.fonts.ready) {
+      document.fonts.ready.then(align).catch(() => {});
+    }
+
+    window.setTimeout(() => {
+      if (layoutObserver) layoutObserver.disconnect();
+    }, 500);
+  };
+
+  // Keep the destination pinned while responsive images settle, then stop
+  // observing as soon as loading is complete (or the visitor interacts).
+  align();
+  if ("ResizeObserver" in window) {
+    layoutObserver = new ResizeObserver(align);
+    layoutObserver.observe(document.body);
+  }
+
+  if (document.readyState === "complete") {
+    alignAfterLayout();
+  } else {
+    window.addEventListener("load", alignAfterLayout, { once: true });
+  }
+};
+
+alignInitialMobileContactHash();
 
 // Carry a short-lived assessment summary from /asbestos/check/ into the
 // inquiry form. sessionStorage keeps the handoff in the current tab only.
@@ -332,6 +407,9 @@ setupMobileCtaScroll(
   }
 
   if (!handoff || !contactForm) return;
+
+  // A valid check result intentionally lands on the form, not the intro.
+  cancelInitialMobileContactHashAlignment();
 
   const messageField = contactForm.querySelector("textarea[name='message']");
   if (!messageField) return;
