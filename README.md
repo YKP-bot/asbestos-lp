@@ -1,6 +1,6 @@
 # アスベスト調査ナビ 静的公開パッケージ
 
-アスベストとアスベスト事前調査の情報をまとめ、記事・地域・FAQ・写真による簡易チェックから既存の相談LPへ送客する静的サイト生成プロジェクトです。コンテンツは `/asbestos/` 配下へ出力し、サイト全体の `sitemap.xml` と `robots.txt` だけをドメイン直下へ出力します。現在は65本のコラム、47都道府県の地域ガイド、東京都62自治体・神奈川県33自治体・埼玉県63自治体・千葉県54自治体の計212自治体ガイドを収録しています。地域ガイドは、届出先、条例、測定、完了報告、補助制度の適用範囲を自治体の一次情報から分けて掲載します。
+アスベストとアスベスト事前調査の情報をまとめ、記事・地域・FAQ・写真による簡易チェックから既存の相談LPへ送客する静的サイト生成プロジェクトです。コンテンツは `/asbestos/` 配下へ出力し、サイト全体の `sitemap.xml` と `robots.txt` だけをドメイン直下へ出力します。現在は65本のコラム、47都道府県の地域ガイド、東京都62自治体・神奈川県33自治体・埼玉県63自治体・千葉県54自治体・大阪府43自治体・愛知県54自治体の計309自治体ガイドを収録しています。地域ガイドは、届出先、条例、測定、完了報告、補助制度の適用範囲を自治体の一次情報から分けて掲載します。愛知県の名古屋市16区は区ごとの独立ページを作らず、名古屋市ページ内で窓口・管轄差分を確認できます。
 
 ## URL構成
 
@@ -56,6 +56,8 @@ node scripts/check.mjs
 
 通常ビルドでは、本番設定のファイルが `dist/asbestos/` に生成され、ドメイン直下へ配置する `dist/sitemap.xml` と `dist/robots.txt` も同時生成されます。ルートサイトマップには既存LPとアスベスト領域の全公開ページが入り、記事の追加・更新時は記事データの `modified` を `lastmod` へ自動反映します。管理画面のプレビュー更新は明示的に `preview` を指定するため、確認環境だけは引き続き `noindex, nofollow` になります。
 
+地域ページの公的住宅統計を更新する場合は、自治体データとカード画像を生成した後、ビルド前に `node scripts/update-housing-stock-stats.mjs` を実行します。市区町村別の建築時期が公表されていない自治体は推計せず「非表章」として出力し、住宅形態は2020年国勢調査、建築時期は2023年住宅・土地統計調査の定義と公式URLを各ページへ併記します。愛知県では54市町村の住宅形態を取得し、2023年表で非表章の自治体には県平均を代入しません。名古屋市16区の差分は名古屋市ページ内の公式管轄情報として扱い、16区分のURLは生成しません。
+
 ## 本番公開手順
 
 1. `config/site.config.json` の `SITE_URL` が `https://lp.sakuraigr.co.jp`、`BASE_PATH` が `/asbestos` であることを確認する。
@@ -93,13 +95,20 @@ SEOページは静的HTML・CSS・JavaScriptのみで、フォーム送信機能
 
 画像判定の変更時は `scripts/benchmark-check.mjs` を使用し、本番と同じブラウザ・WASM経路で、明確な建材、外観が曖昧な公的資料、似た建材、実際の画面キャプチャ、1〜4枚の混在入力を回帰確認します。
 
-## 千葉県市町村ガイドの再生成
+## 市町村ガイドの再生成
 
-千葉県の調査データを更新した場合は、公開ビルド前に共通形式化と画像生成を順番に実行します。画像スクリプトは54件すべてのJSON仕様を先に書き出して再読込・検証した後、1200×630のWebPを生成します。Python 3、Pillow、`NotoSansJP-VF.ttf` が必要です。
+神奈川県・埼玉県・千葉県の調査データを更新した場合は、公開ビルド前に共通形式化を実行します。大阪府と愛知県は公式所管・補助制度を確認して、それぞれの専用スクリプトから自治体データを生成します。愛知県は38市・14町・2村の54ページを生成し、名古屋市16区は名古屋市1ページ内へまとめます。画像スクリプトは対象自治体すべてのJSON仕様を先に書き出して再読込・検証した後、1200×630のWebPを1自治体1枚生成します。愛知県ではJSON仕様54件とWebP 54枚の一致を確認します。Python 3、Pillow、`NotoSansJP-VF.ttf` が必要です。
 
 ```powershell
 node scripts/assemble-kanagawa-saitama-municipalities.mjs
 python scripts/create-tokyo-municipality-images.py --prefecture-slug chiba --expected-count 54
+node scripts/assemble-osaka-municipalities.mjs
+python scripts/create-tokyo-municipality-images.py --prefecture-slug osaka --expected-count 43
+node scripts/assemble-aichi-municipalities.mjs
+python scripts/create-tokyo-municipality-images.py --prefecture-slug aichi --expected-count 54
+node scripts/update-housing-stock-stats.mjs
+node scripts/build.mjs
+node scripts/check.mjs
 ```
 
 ## ファイル構成
@@ -115,6 +124,8 @@ content/tokyo-municipalities.json  東京都62自治体の窓口・補助・地�
 content/kanagawa-municipalities.json  神奈川県33自治体の窓口・補助・地域特性・公式出典
 content/saitama-municipalities.json  埼玉県63自治体の窓口・補助・地域特性・公式出典
 content/chiba-municipalities.json  千葉県54自治体の窓口・補助・地域特性・公式出典
+content/osaka-municipalities.json  大阪府43自治体の窓口・補助・地域特性・公式出典
+content/aichi-municipalities.json  愛知県54自治体の窓口・補助・地域特性・公式出典（名古屋市16区は市ページ内）
 content/image-prompts-*-municipalities.json  自治体別カード画像のJSON仕様
 content/faq.json            FAQデータ
 templates/article.html      共通記事テンプレート
@@ -125,6 +136,8 @@ source/images/areas/tokyo/  東京都62自治体の固有カード画像
 source/images/areas/kanagawa/  神奈川県33自治体の固有カード画像
 source/images/areas/saitama/  埼玉県63自治体の固有カード画像
 source/images/areas/chiba/  千葉県54自治体の固有カード画像
+source/images/areas/osaka/  大阪府43自治体の固有カード画像
+source/images/areas/aichi/  愛知県54自治体の固有カード画像
 source/seo.css              情報サイト共通CSS
 source/site.js              情報サイト共通JavaScript
 source/check.css            写真で簡易チェック専用CSS
@@ -135,6 +148,8 @@ scripts/build.mjs           静的生成
 scripts/check.mjs           公開前検証
 scripts/assemble-tokyo-municipalities.mjs  自治体調査データの共通形式化
 scripts/assemble-kanagawa-saitama-municipalities.mjs  神奈川・埼玉・千葉の調査データの共通形式化
+scripts/assemble-osaka-municipalities.mjs  大阪府43自治体の公式所管・補助・地域情報の共通形式化
+scripts/assemble-aichi-municipalities.mjs  愛知県54自治体と名古屋市16区内差分の共通形式化
 scripts/create-tokyo-municipality-images.py  JSON仕様作成後に自治体カードを描画
 scripts/serve.mjs           ローカル確認用サーバー
 dist/asbestos/              生成された公開用ファイル

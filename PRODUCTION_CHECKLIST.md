@@ -18,11 +18,11 @@
 - [ ] `og:image` が本番ドメインの `/asbestos/` 配下
 - [ ] JSON-LD内のURLが本番ドメイン
 - [ ] Article、FAQPage、BreadcrumbList、WebSite等のJSON-LDが構文エラーなし
-- [ ] ルート `sitemap.xml` に既存LPと全公開ページが1回ずつ掲載されている（現在338 URL）
-- [ ] `/asbestos/sitemap.xml` にアスベスト領域の全公開ページが1回ずつ掲載されている（現在337 URL）
+- [ ] ルート `sitemap.xml` に既存LPと全公開ページが1回ずつ掲載されている（現在435 URL）
+- [ ] `/asbestos/sitemap.xml` にアスベスト領域の全公開ページが1回ずつ掲載されている（現在434 URL）
 - [ ] 各記事の `lastmod` が記事データの `modified` と一致している
 - [ ] `sitemap.xml` がUTF-8・絶対URL・Sitemap 0.9名前空間のXMLになっている
-- [ ] `rss.xml` に全コラム、47都道府県ガイド、東京都・神奈川県・埼玉県・千葉県の212自治体ガイドが掲載されている
+- [ ] `rss.xml` に全コラム、47都道府県ガイド、東京都・神奈川県・埼玉県・千葉県・大阪府・愛知県の309自治体ガイドが掲載されている
 - [ ] title・descriptionがページごとに重複していない
 
 ## 表示とリンク
@@ -41,7 +41,12 @@
 - [ ] 東京都ページで62自治体を検索でき、23区・多摩26市・西多摩・島しょの各ページへ移動できる
 - [ ] 神奈川県ページで33自治体を検索でき、5地域分類をスマホでは「＋」で開閉できる
 - [ ] 埼玉県ページで63自治体を検索でき、10地域分類をスマホでは「＋」で開閉できる
-- [ ] 千葉県ページで54自治体を検索でき、11地域分類をスマホでは「＋」で開閉できる
+- [ ] 千葉県ページで54自治体を検索でき、11地域分類をPC・タブレット・スマホで「＋」から開閉できる
+- [ ] 大阪府ページで43自治体（33市・9町・1村）を検索でき、9地域分類をPC・タブレット・スマホで「＋」から開閉できる
+- [ ] 愛知県ページで54自治体（38市・14町・2村）を検索でき、名古屋・尾張・海部・知多・西三河・東三河の6地域分類をPC・タブレット・スマホで「＋」から開閉できる
+- [ ] 名古屋市の16区が独立URLにならず、名古屋市ページ内で区ごとの窓口・管轄差分を確認できる
+- [ ] `content/image-prompts-aichi-municipalities.json` が54件で、`source/images/areas/aichi/` と公開先の愛知県カード画像が54枚ある
+- [ ] 愛知県54市町村の住宅形態が表示され、2023年住宅・土地統計調査で非表章の自治体を県平均で補完していない
 - [ ] 画像、CSS、JavaScriptがすべて200で返る
 - [ ] 内部リンクにNetlifyドメインがない
 - [ ] 既存LPは結果受取用 `script.js` の追記以外に、HTML・CSS・PHP・画像・送信先・ルーティングを変更していない
@@ -56,6 +61,9 @@
 
 ## 公開作業
 
+- [ ] `node scripts/assemble-aichi-municipalities.mjs` が54市町村を出力
+- [ ] `python scripts/create-tokyo-municipality-images.py --prefecture-slug aichi --expected-count 54` がJSON仕様54件を検証し、WebP 54枚を生成
+- [ ] `node scripts/update-housing-stock-stats.mjs` を画像生成後・本番ビルド前に実行
 - [ ] `ENVIRONMENT=production`、`OUTPUT_ROOT=release` で `node scripts/build.mjs` が成功
 - [ ] 同じ環境変数で `node scripts/check.mjs` が「検証成功」
 - [ ] 配置前バックアップを取得
@@ -64,10 +72,10 @@
 - [ ] 公開した全HTMLで `noindex` がなく、robots が `index, follow` になっている
 - [ ] レスポンスヘッダーに `X-Robots-Tag: noindex` がない
 - [ ] `https://lp.sakuraigr.co.jp/robots.txt` が `Allow: /` でルートサイトマップを参照している
-- [ ] `https://lp.sakuraigr.co.jp/sitemap.xml` が表示でき、既存LPを含む全338 URLを含んでいる
-- [ ] `https://lp.sakuraigr.co.jp/asbestos/sitemap.xml` が表示でき、アスベスト領域の全337 URLを含んでいる
+- [ ] `https://lp.sakuraigr.co.jp/sitemap.xml` が表示でき、既存LPを含む全435 URLを含んでいる
+- [ ] `https://lp.sakuraigr.co.jp/asbestos/sitemap.xml` が表示でき、アスベスト領域の全434 URLを含んでいる
 - [ ] `/asbestos/assets/ai/` 配下のモデル・ランタイムが200で返り、画像AIが予備判定へフォールバックしていない
-- [ ] `https://lp.sakuraigr.co.jp/asbestos/rss.xml` が表示でき、324件（コラム65本＋都道府県47件＋4都県の自治体212件）を含んでいる
+- [ ] `https://lp.sakuraigr.co.jp/asbestos/rss.xml` が表示でき、421件（コラム65本＋都道府県47件＋6都府県の自治体309件）を含んでいる
 - [ ] 公開後にPC・タブレット・スマホで主要ページを確認
 - [ ] Search Consoleで `https://lp.sakuraigr.co.jp/sitemap.xml` を送信
 - [ ] Search ConsoleのURL検査で `/asbestos/` をライブテストし、インデックス登録をリクエスト

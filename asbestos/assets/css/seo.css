@@ -2184,10 +2184,11 @@ body.is-search-open { overflow: hidden; }
 .tokyo-municipality-card { min-width: 0; display: grid; grid-template-columns: clamp(82px,7.5vw,126px) minmax(0,1fr) 12px; align-items: center; gap: 10px; overflow: hidden; padding: 8px 11px 8px 8px; border: 1px solid #d5e1ea; border-radius: 7px; color: inherit; background: #fff; box-shadow: 0 4px 14px rgba(4,51,91,.04); text-decoration: none; transition: transform .18s ease,border-color .18s ease,box-shadow .18s ease; }
 .tokyo-municipality-card:hover { border-color: #5c96bf; box-shadow: 0 8px 20px rgba(4,51,91,.1); transform: translateY(-2px); }
 .tokyo-municipality-card img { width: 100%; aspect-ratio: 1.9; object-fit: cover; border-radius: 4px; }
-.tokyo-municipality-card span,.tokyo-municipality-card small,.tokyo-municipality-card strong,.tokyo-municipality-card em { min-width: 0; display: block; }
+.tokyo-municipality-card span,.tokyo-municipality-card small,.tokyo-municipality-card strong,.tokyo-municipality-card em,.tokyo-municipality-card i { min-width: 0; display: block; }
 .tokyo-municipality-card small { color: #5e7890; font-size: clamp(7px,.5vw,9px); font-style: normal; font-weight: 800; }
 .tokyo-municipality-card strong { margin-top: 2px; color: #0a416f; font-size: clamp(12px,.92vw,16px); }
 .tokyo-municipality-card em { margin-top: 3px; overflow: hidden; color: #788997; font-size: clamp(7px,.52vw,9px); font-style: normal; line-height: 1.45; text-overflow: ellipsis; white-space: nowrap; }
+.tokyo-municipality-card i { margin-top: 4px; color: #0b5795; font-size: clamp(7px,.5vw,9px); font-style: normal; font-weight: 900; line-height: 1.4; }
 .tokyo-municipality-card > b { color: #0b5795; font-size: 17px; }
 
 .tokyo-municipality-page { color: #172d43; background: #f4f8fb; }
@@ -2264,6 +2265,22 @@ body.is-search-open { overflow: hidden; }
 .municipality-office-grid h3 { margin: 8px 0 0; color: #103e68; font-size: clamp(17px,1.4vw,25px); line-height: 1.55; }
 .municipality-office-grid p { margin: 11px 0 0; color: #536a7e; font-size: clamp(10px,.76vw,13px); line-height: 1.9; }
 .municipality-office-grid a { display: inline-flex; gap: 7px; margin-top: 15px; color: #0b5795; font-size: clamp(9px,.7vw,12px); font-weight: 900; }
+.municipality-districts { padding: clamp(22px,3vw,48px); border: 1px solid #bed5e5; border-radius: 9px; background: linear-gradient(135deg,#eef7fc,#fff); }
+.municipality-district-note { display: grid; grid-template-columns: auto minmax(0,1fr); gap: 18px; align-items: start; margin: 0 0 16px; padding: 14px 17px; border-left: 4px solid #0b5795; background: #fff; }
+.municipality-district-note strong { color: #103f68; font-size: clamp(10px,.78vw,13px); white-space: nowrap; }
+.municipality-district-note p { margin: 0; color: #536a7e; font-size: clamp(9px,.68vw,11px); line-height: 1.8; }
+.municipality-district-grid { display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); gap: 11px; }
+.municipality-district-office { min-width: 0; overflow: hidden; border: 1px solid #cadbe7; border-radius: 7px; background: #fff; }
+.municipality-district-office > header { display: grid; grid-template-columns: minmax(0,1fr) auto; align-items: end; gap: 3px 14px; padding: 15px 17px; color: #fff; background: #0a477b; }
+.municipality-district-office > header span { grid-column: 1 / -1; color: #a9d8ef; font-size: clamp(8px,.58vw,10px); font-weight: 900; letter-spacing: .08em; }
+.municipality-district-office > header h3 { margin: 0; font-size: clamp(15px,1.15vw,20px); line-height: 1.45; }
+.municipality-district-office > header a { color: #fff; font-size: clamp(9px,.68vw,11px); font-weight: 900; text-decoration: none; white-space: nowrap; }
+.municipality-district-office ul { list-style: none; margin: 0; padding: 0; }
+.municipality-district-office li { display: grid; grid-template-columns: 70px minmax(0,1fr); gap: 3px 12px; padding: 12px 16px; border-top: 1px solid #e0e9f0; }
+.municipality-district-office li:first-child { border-top: 0; }
+.municipality-district-office li strong { grid-row: 1 / 3; align-self: center; color: #0b416f; font-size: clamp(11px,.82vw,14px); }
+.municipality-district-office li span { min-width: 0; color: #5b7083; font-size: clamp(8px,.62vw,10px); line-height: 1.55; }
+.municipality-district-source { display: inline-flex; gap: 7px; margin-top: 16px; color: #0b5795; font-size: clamp(9px,.7vw,12px); font-weight: 900; }
 .municipality-table-wrap { max-width: 100%; overflow-x: auto; border: 1px solid #ccdbe6; border-radius: 7px; background: #fff; scrollbar-color: #6a91ad #e8eff4; }
 .municipality-table-wrap table { width: 100%; min-width: 760px; border-collapse: collapse; table-layout: fixed; }
 .municipality-table-wrap th,.municipality-table-wrap td { padding: clamp(12px,1.2vw,19px); border-right: 1px solid #d5e1ea; border-bottom: 1px solid #d5e1ea; color: #496277; font-size: clamp(9px,.7vw,12px); line-height: 1.75; text-align: left; vertical-align: top; }
@@ -2326,6 +2343,7 @@ body.is-search-open { overflow: hidden; }
   .tokyo-municipality-card small { font-size: 8px; }
   .tokyo-municipality-card strong { font-size: 13px; }
   .tokyo-municipality-card em { font-size: 8px; }
+  .tokyo-municipality-card i { font-size: 8px; }
   .municipality-hero { padding: 22px 0 27px; }
   .municipality-hero > .seo-container { display: flex; flex-direction: column; align-items: stretch; gap: 19px; }
   .municipality-hero-copy > a { margin-bottom: 12px; font-size: 10px; }
@@ -2380,6 +2398,17 @@ body.is-search-open { overflow: hidden; }
   .municipality-office-grid article { padding: 15px; }
   .municipality-office-grid h3 { font-size: 17px; }
   .municipality-office-grid p { font-size: 10px; }
+  .municipality-districts { padding: 15px; }
+  .municipality-district-note { grid-template-columns: 1fr; gap: 5px; padding: 12px; }
+  .municipality-district-note strong { font-size: 11px; white-space: normal; }
+  .municipality-district-note p { font-size: 9px; }
+  .municipality-district-grid { grid-template-columns: 1fr; gap: 8px; }
+  .municipality-district-office > header { padding: 13px; }
+  .municipality-district-office > header h3 { font-size: 16px; }
+  .municipality-district-office li { grid-template-columns: 58px minmax(0,1fr); gap: 3px 9px; padding: 11px 12px; }
+  .municipality-district-office li strong { font-size: 11px; }
+  .municipality-district-office li span { font-size: 9px; }
+  .municipality-district-source { font-size: 10px; }
   .municipality-table-wrap { position: relative; border-radius: 5px; }
   .municipality-table-wrap table { min-width: 720px; }
   .municipality-table-wrap th,.municipality-table-wrap td { padding: 11px; font-size: 10px; }
