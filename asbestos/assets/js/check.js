@@ -36,9 +36,6 @@
 
     const query = (selector) => root.querySelector(selector);
     const queryAll = (selector) => [...root.querySelectorAll(selector)];
-    const consentDialog = document.querySelector('[data-check-consent]');
-    const consentAccept = consentDialog?.querySelector('[data-check-consent-accept]');
-    const consentCancel = consentDialog?.querySelector('[data-check-consent-cancel]');
     const photoInputs = queryAll('[data-check-photo-input]');
     const photoGrid = query('[data-check-photo-grid]');
     const photoStatus = query('[data-check-photo-status]');
@@ -58,7 +55,6 @@
     const resultMessage = query('[data-result-message]');
     const resultReason = query('[data-result-reason]');
     const state = {
-      accepted: false,
       analyzing: false,
       photos: [],
       activeStep: 'upload',
@@ -71,7 +67,7 @@
       // Storage can be unavailable in private browsing. The checker still works.
     }
 
-      initializeConsent();
+    initializeStartControls();
     initializePhotoControls();
     initializeDetailRows();
     initializeNavigation();
@@ -79,73 +75,20 @@
     updatePhotoView();
     showStep('upload');
 
-    function initializeConsent() {
-      if (!consentDialog) {
-        state.accepted = true;
-        root.classList.add('is-consented');
-        root.dataset.checkState = 'ready';
-        return;
-      }
-
-      consentDialog.addEventListener('cancel', (event) => {
-        event.preventDefault();
-      });
-
-      consentAccept?.addEventListener('click', (event) => {
-        event.preventDefault();
-        state.accepted = true;
-        root.classList.add('is-consented');
-        root.dataset.checkState = 'ready';
-        closeConsent();
-        window.AsbestosImageAI?.warmup?.().catch(() => {
-          // Analysis automatically falls back to local image features if loading fails.
-        });
-        query('[data-photo-source], [data-check-photo-input]')?.focus({ preventScroll: true });
-      });
-
+    function initializeStartControls() {
+      root.classList.add('is-consented');
+      root.dataset.checkState = 'ready';
       queryAll('[data-check-start]').forEach((trigger) => {
         trigger.addEventListener('click', () => {
-          if (!state.accepted) {
-            if (typeof consentDialog.showModal === 'function') {
-              if (!consentDialog.open) consentDialog.showModal();
-            } else {
-              consentDialog.hidden = false;
-              consentDialog.classList.add('is-open');
-              consentAccept?.focus({ preventScroll: true });
-            }
-            return;
-          }
           query('.check-flow, [data-check-step="upload"]')?.scrollIntoView({
             behavior: reducedMotion() ? 'auto' : 'smooth',
             block: 'start'
           });
         });
       });
-
-      consentCancel?.addEventListener('click', () => {
-        const homePath = root.dataset.checkHome || `${normalizeBasePath(root.dataset.basePath)}/`;
-        window.location.assign(homePath);
+      window.AsbestosImageAI?.warmup?.().catch(() => {
+        // Analysis automatically falls back to local image features if loading fails.
       });
-
-      window.requestAnimationFrame(() => {
-        if (typeof consentDialog.showModal === 'function') {
-          if (!consentDialog.open) consentDialog.showModal();
-        } else {
-          consentDialog.hidden = false;
-          consentDialog.classList.add('is-open');
-          consentDialog.setAttribute('role', 'dialog');
-          consentDialog.setAttribute('aria-modal', 'true');
-          consentAccept?.focus({ preventScroll: true });
-        }
-      });
-    }
-
-    function closeConsent() {
-      if (typeof consentDialog?.close === 'function' && consentDialog.open) consentDialog.close();
-      else if (consentDialog) {
-        consentDialog.hidden = true;
-        consentDialog.classList.remove('is-open');
-      }
     }
 
     function initializePhotoControls() {

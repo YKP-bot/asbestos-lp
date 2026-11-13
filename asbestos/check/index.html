@@ -65,14 +65,14 @@
   </div>
 </header>
 <main id="main" tabindex="-1"><nav class="breadcrumbs seo-container" aria-label="パンくずリスト"><ol><li><a href="/asbestos/">アスベスト調査ナビ</a></li><li><span aria-current="page">写真で簡易チェック</span></li></ol></nav>
-<div class="check-app" data-check-app data-base-path="/asbestos" data-check-state="locked">
+<div class="check-app" data-check-app data-base-path="/asbestos" data-check-state="ready">
   <section class="check-hero">
     <div class="seo-container check-hero-inner">
       <div class="check-hero-copy">
         <p class="check-kicker check-hero-kicker">PHOTO CHECK</p>
         <h1 class="check-hero-title">建材の写真から<br><span>調査推奨度</span>をチェック</h1>
         <p>建材が写った写真を1枚選ぶだけで利用できます。分かる範囲の情報を追加すると、判定の確信度が上がります。</p>
-        <button class="check-start-button" type="button" data-check-start><svg class="nav-check-icon" width="20" height="20" viewBox="0 0 24 24" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4.5 7.5h3l1.5-2h6l1.5 2h3a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2h-15a2 2 0 0 1-2-2v-8a2 2 0 0 1 2-2Z"></path><circle cx="12" cy="13" r="3.5"></circle></svg><span>注意事項を確認してはじめる</span></button>
+        <button class="check-start-button" type="button" data-check-start><svg class="nav-check-icon" width="20" height="20" viewBox="0 0 24 24" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4.5 7.5h3l1.5-2h6l1.5 2h3a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2h-15a2 2 0 0 1-2-2v-8a2 2 0 0 1 2-2Z"></path><circle cx="12" cy="13" r="3.5"></circle></svg><span>写真を選んではじめる</span></button>
       </div>
       <aside class="check-hero-note" aria-label="この機能で分かること">
         <span>CHECK RESULT</span>
@@ -82,7 +82,7 @@
           <li><b>02</b>画像上の類似度（3段階）</li>
           <li><b>03</b>判定の確信度（3段階）</li>
         </ul>
-        <p>石綿含有の有無・含有率を判定する機能ではありません。</p>
+        <p>石綿含有の有無や含有率を判定するものではありません。結果だけで必要な事前調査を省略したりすることはできません。</p>
       </aside>
     </div>
   </section>
@@ -257,24 +257,6 @@
     </div>
   </section>
 
-  <dialog class="check-consent-dialog" data-check-consent aria-labelledby="check-consent-title" aria-describedby="check-consent-description">
-    <form method="dialog" class="check-consent-panel">
-      <header>
-        <span>ご利用前に必ずご確認ください</span>
-        <h2 id="check-consent-title">この機能で分かるのは<br>「調査推奨度」です</h2>
-      </header>
-      <div id="check-consent-description" class="check-consent-content">
-        <p>本機能で確認できるのは、画像と入力情報からみた「アスベスト調査推奨度」です。石綿含有の有無や含有率を判定するものではありません。</p>
-        <p>本結果だけを根拠に「石綿なし」と判断したり、必要な事前調査を省略したりすることはできません。実際の解体・改修工事では、資格者による事前調査を行い、関係法令および各自治体の条例等に従ってください。</p>
-        <p>本機能は建築物に使用された建材を対象としています。工作物、船舶、車両、製品・日用品等は対象外です。</p>
-        <p>撮影のために建材を触る、削る、剥がす、割る、穴を開ける等の行為はしないでください。安全に撮影できない場合は、撮影せず専門家へご相談ください。</p>
-      </div>
-      <div class="check-consent-actions">
-        <button type="button" class="check-consent-cancel" data-check-consent-cancel>今回は利用しない</button>
-        <button type="submit" class="check-consent-accept" value="confirm" data-check-consent-accept>上記を確認して写真を選ぶ</button>
-      </div>
-    </form>
-  </dialog>
   <noscript><div class="seo-container check-noscript">この機能を利用するには、ブラウザのJavaScriptを有効にしてください。</div></noscript>
 </div></main>
 
@@ -336,7 +318,6 @@
 </dialog>
 <script src="/asbestos/assets/js/site.js?v=20261113-01" defer></script>
 <script src="/asbestos/assets/js/analytics.js" data-measurement-id="G-2PMJ2J4FD7" defer></script>
-<script src="/asbestos/assets/js/consent-ui.js" defer></script>
 <script type="module" src="/asbestos/assets/js/check-ai.js?v=20261113-01" defer></script>
 <script src="/asbestos/assets/js/check.js?v=20261113-01" defer></script>
 </body>
