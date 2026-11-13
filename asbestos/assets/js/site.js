@@ -11,6 +11,134 @@ const applyMotionPreference = () => {
 applyMotionPreference();
 reducedMotionQuery.addEventListener?.('change', applyMotionPreference);
 
+// Carry a small, non-personal consultation context from owned-media CTAs to
+// the existing LP. Query parameters support new-tab navigation; sessionStorage
+// is the same-tab fallback. Values are derived only from published paths and
+// allow-listed data attributes, never from page copy or user input.
+(() => {
+  const origin = 'https://lp.sakuraigr.co.jp';
+  const storageKey = 'ASBESTOS_CONSULTATION_CONTEXT_V1';
+  const storageTtl = 30 * 60 * 1000;
+  const allowedLocations = new Set([
+    'article-early', 'article-follow-desktop', 'article-follow-floating',
+    'article-end', 'footer', 'prefecture', 'prefecture-early', 'municipality', 'check-result',
+    'page-end', 'other'
+  ]);
+  const allowedIntents = new Set([
+    'survey', 'cost', 'procedure', 'construction', 'contractor', 'local',
+    'default', 'check', 'general'
+  ]);
+  const safeSlug = (value) => typeof value === 'string'
+    && /^[a-z0-9][a-z0-9-]{0,95}$/.test(value)
+    ? value
+    : '';
+
+  let canonicalPath = '';
+  try {
+    const canonicalNode = document.querySelector('link[rel="canonical"]');
+    const canonicalUrl = new URL(canonicalNode?.getAttribute('href') || '');
+    if (canonicalUrl.origin !== origin || canonicalUrl.search || canonicalUrl.hash) return;
+    const normalizedPath = canonicalUrl.pathname.endsWith('/')
+      ? canonicalUrl.pathname
+      : `${canonicalUrl.pathname}/`;
+    if (!/^\/asbestos\/(?:[a-z0-9-]+\/)*$/i.test(normalizedPath)) return;
+    canonicalPath = normalizedPath;
+  } catch (_error) {
+    return;
+  }
+
+  const segments = canonicalPath.split('/').filter(Boolean);
+  const pageType = segments[1] === 'column' && segments[2]
+    ? (segments[2] === 'category' ? 'category' : segments[2] === 'ranking' ? 'column' : 'article')
+    : segments[1] === 'area' && segments[3]
+      ? 'municipality'
+      : segments[1] === 'area' && segments[2]
+        ? 'prefecture'
+        : segments[1] === 'check'
+          ? 'check'
+          : segments[1] === 'faq'
+            ? 'faq'
+            : segments[1] === 'area'
+              ? 'area'
+            : segments[1] === 'column'
+              ? 'column'
+              : 'home';
+
+  const contentSlug = (() => {
+    if (pageType === 'article') return safeSlug(segments[2]);
+    if (pageType === 'category') return safeSlug(`category-${segments[3] || 'index'}`);
+    if (pageType === 'column' && segments[2] === 'ranking') return 'ranking';
+    if (pageType === 'municipality') return safeSlug(`area-${segments[2]}-${segments[3]}`);
+    if (pageType === 'prefecture') return safeSlug(`area-${segments[2]}`);
+    return safeSlug(pageType);
+  })();
+  if (!contentSlug) return;
+
+  const defaultIntent = pageType === 'prefecture' || pageType === 'municipality'
+    ? 'local'
+    : pageType === 'check'
+      ? 'check'
+      : 'general';
+
+  const contextFor = (anchor) => {
+    const declaredLocation = anchor.getAttribute('data-cta-location') || '';
+    const location = allowedLocations.has(declaredLocation) ? declaredLocation : 'other';
+    const declaredVariant = anchor.closest('[data-cta-variant]')?.getAttribute('data-cta-variant') || '';
+    const intent = allowedIntents.has(declaredVariant) ? declaredVariant : defaultIntent;
+    return {
+      version: 1,
+      createdAt: Date.now(),
+      src: 'asbestos_navi',
+      content: contentSlug,
+      intent,
+      cta: location,
+      pageType,
+      sourcePath: canonicalPath
+    };
+  };
+
+  const saveContext = (context) => {
+    try {
+      window.sessionStorage.setItem(storageKey, JSON.stringify(context));
+      window.setTimeout(() => {
+        try {
+          const current = JSON.parse(window.sessionStorage.getItem(storageKey) || 'null');
+          if (current?.createdAt === context.createdAt) window.sessionStorage.removeItem(storageKey);
+        } catch (_error) {
+          window.sessionStorage.removeItem(storageKey);
+        }
+      }, storageTtl + 1000);
+    } catch (_error) {
+      // Query parameters still carry the same non-personal context.
+    }
+  };
+
+  document.querySelectorAll('a[data-cta-link][data-cta-intent="contact"]').forEach((anchor) => {
+    const context = contextFor(anchor);
+    if (!context) return;
+
+    let destination;
+    try {
+      destination = new URL(anchor.getAttribute('href') || '', window.location.href);
+    } catch (_error) {
+      return;
+    }
+    if (destination.origin !== origin || destination.pathname !== '/' || destination.hash !== '#contact') return;
+
+    const target = new URL(`${origin}/`);
+    target.searchParams.set('src', context.src);
+    target.searchParams.set('content', context.content);
+    target.searchParams.set('intent', context.intent);
+    target.searchParams.set('cta', context.cta);
+    target.searchParams.set('path', context.sourcePath);
+    target.hash = 'contact';
+    anchor.href = target.href;
+
+    anchor.addEventListener('click', () => saveContext({ ...context, createdAt: Date.now() }));
+    anchor.addEventListener('auxclick', () => saveContext({ ...context, createdAt: Date.now() }));
+  });
+})();
+
 if (button && nav) {
   const navOverlay = document.createElement('button');
   navOverlay.className = 'mobile-nav-overlay';
@@ -234,7 +362,11 @@ if (siteSearchDialog && siteSearchTriggers.length) {
           searchDescription: normalizeSearchText(item.description),
           searchCategories: normalizeSearchText((item.categories || [item.category]).join(' ')),
           searchBody: normalizeSearchText(item.text)
-        })));
+        })))
+        .catch((error) => {
+          searchIndexPromise = null;
+          throw error;
+        });
     }
     return searchIndexPromise;
   };

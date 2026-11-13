@@ -1,5 +1,7 @@
 # アスベスト調査ナビ 静的公開パッケージ
 
+> このリポジトリは公開用の生成物です。記事・地域ページの正本は `asbestos-seo-publish` プロジェクトにあり、正本で `node scripts/build.mjs` と `node scripts/check.mjs` を成功させてから、生成された `dist/asbestos/`、`dist/sitemap.xml`、`dist/robots.txt` をこのリポジトリへ同期します。Netlifyの配信元はこのリポジトリの `main` だけに統一し、手動アップロードとGitHub連携を混在させません。
+
 アスベストとアスベスト事前調査の情報をまとめ、記事・地域・FAQ・写真による簡易チェックから既存の相談LPへ送客する静的サイト生成プロジェクトです。コンテンツは `/asbestos/` 配下へ出力し、サイト全体の `sitemap.xml` と `robots.txt` だけをドメイン直下へ出力します。現在は65本のコラム、47都道府県の地域ガイド、東京都62自治体・神奈川県33自治体・埼玉県63自治体・千葉県54自治体・大阪府43自治体・愛知県54自治体の計309自治体ガイドを収録しています。地域ガイドは、届出先、条例、測定、完了報告、補助制度の適用範囲を自治体の一次情報から分けて掲載します。愛知県の名古屋市16区は区ごとの独立ページを作らず、名古屋市ページ内で窓口・管轄差分を確認できます。
 
 ## URL構成
@@ -31,7 +33,7 @@
   "BASE_PATH": "/asbestos",
   "ENVIRONMENT": "production",
   "LP_URL": "https://lp.sakuraigr.co.jp/",
-  "LP_LASTMOD": "2026-07-24",
+  "LP_LASTMOD": "2026-11-13",
   "INCLUDE_LP_COPY": false
 }
 ```
@@ -56,6 +58,15 @@ node scripts/check.mjs
 
 通常ビルドでは、本番設定のファイルが `dist/asbestos/` に生成され、ドメイン直下へ配置する `dist/sitemap.xml` と `dist/robots.txt` も同時生成されます。ルートサイトマップには既存LPとアスベスト領域の全公開ページが入り、記事の追加・更新時は記事データの `modified` を `lastmod` へ自動反映します。管理画面のプレビュー更新は明示的に `preview` を指定するため、確認環境だけは引き続き `noindex, nofollow` になります。
 
+公開リポジトリでは、Netlifyビルド時に次も自動実行します。
+
+```text
+npm run build:seo
+npm run check
+```
+
+`tools/seo-maintenance.mjs` は公開HTMLのcanonical、robots、OG URL、JSON-LD、内部リンクを検証し、ルートと `/asbestos/` のサイトマップ、RSS、robots.txtを現在の公開ページから再生成します。サイトマップは従来どおりGoogle XML Sitemap仕様の1つのURLセットを維持します。記事HTMLだけ追加してサイトマップを更新し忘れた状態では検証が失敗します。
+
 地域ページの公的住宅統計を更新する場合は、自治体データとカード画像を生成した後、ビルド前に `node scripts/update-housing-stock-stats.mjs` を実行します。市区町村別の建築時期が公表されていない自治体は推計せず「非表章」として出力し、住宅形態は2020年国勢調査、建築時期は2023年住宅・土地統計調査の定義と公式URLを各ページへ併記します。愛知県では54市町村の住宅形態を取得し、2023年表で非表章の自治体には県平均を代入しません。名古屋市16区の差分は名古屋市ページ内の公式管轄情報として扱い、16区分のURLは生成しません。
 
 ## 本番公開手順
@@ -79,13 +90,13 @@ Compress-Archive -Path release\* -DestinationPath asbestos-production.zip -Force
 ```
 
 5. `release/asbestos/` をドキュメントルート直下へ配置し、`release/sitemap.xml` と `release/robots.txt` はドメイン直下へ配置する。ZIPの場合も同じ階層を維持する。
-6. 簡易チェック結果を既存LPの問い合わせ欄へ引き継ぐ場合は、同梱済みの受取処理が公開リポジトリ直下の `script.js` に入っていることを確認する。LPのHTML、CSS、PHP、画像、ルーティングは変更しない。
+6. CTAの送信元情報と簡易チェック結果を既存LPへ引き継ぐ `script.js`、匿名成果計測の `asbestos/assets/js/analytics.js`、同意UIの `asbestos/assets/js/consent-ui.js` が公開物に含まれることを確認する。LPのデザイン、画像、canonical、robots、favicon、OGP画像URLは変更しない。
 7. 公開URLで情報トップ、LP、記事、地域、FAQ、簡易チェック、画像、CSS、JavaScript、AIモデル、`/sitemap.xml`、`/robots.txt`、RSSが200で返ることを確認する。
 8. `PRODUCTION_CHECKLIST.md` を上から順に確認する。
 
 ## フォームについて
 
-SEOページは静的HTML・CSS・JavaScriptのみで、フォーム送信機能を持ちません。相談ボタンは `LP_URL` の既存LPへ遷移するため、Netlify Forms / FunctionsやPHPメール送信には依存しません。
+SEOページは静的HTML・CSS・JavaScriptのみでフォーム送信機能を持たず、相談ボタンは `LP_URL` の既存LPへ遷移します。既存LPは現在のNetlify Forms送信を維持します。SEOページからLPへ引き継ぐのは送信元ページ、CTA位置、相談テーマなどの列挙値だけで、氏名・電話・メール・写真などの個人情報をURLやアクセス解析へ渡しません。
 
 ## 写真で簡易チェックについて
 
@@ -157,4 +168,4 @@ dist/sitemap.xml            既存LPを含むサイト全体のサイトマッ�
 dist/robots.txt             ドメイン直下へ配置するクローラー設定
 ```
 
-公開リポジトリ直下のLPは、簡易チェック結果を問い合わせ欄へ受け取る `script.js` の追記以外は変更しません。
+公開リポジトリ直下のLPは、承認済みSEO文言、問い合わせ入力の負担軽減、簡易チェック・CTA文脈の引き継ぎ、匿名の成果計測に必要な範囲だけを変更します。

@@ -1,0 +1,11 @@
+{
+  "name": "sakurai-asbestos-site",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build": "node tools/seo-maintenance.mjs --write",
+    "build:seo": "node tools/seo-maintenance.mjs --write",
+    "check": "node tools/seo-maintenance.mjs --check",
+    "preview": "node tools/serve.mjs"
+  }
+}

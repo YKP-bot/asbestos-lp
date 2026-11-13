@@ -7754,59 +7754,29 @@ inset 0 1px 1px rgba(255,255,255,.85);
   }
 }
 
-/* Smartphone WHY SAKURAI cards: readable two-line descriptions */
+/* Smartphone WHY SAKURAI: readable text without shrinking the glyphs. */
 @media (max-width:640px){
   .reason-card{
-    padding-left:12px;
-    padding-right:12px;
-    -webkit-text-size-adjust:none;
-    text-size-adjust:none;
+    padding:18px 14px;
   }
 
-  .reason-card-text{
-    font-size:11px;
+  .reason-card p.reason-card-text{
+    margin-top:10px;
+    font-size:12px;
     font-weight:700;
-    line-height:18px !important;
-    zoom:76.5%;
+    line-height:1.8 !important;
+    white-space:normal;
+    text-align:left;
+    text-wrap:balance;
   }
 
-  .reason-card p{
-    margin-top:9px;
-  }
-}
-
-@media (min-width:375px) and (max-width:389px){
-  .reason-card-text{
-    zoom:80.5%;
-  }
-}
-
-@media (max-width:374px){
-  .reason-heading p{
-    font-size:10.5px !important;
-  }
-}
-
-@media (min-width:390px) and (max-width:411px){
-  .reason-card-text{
-    zoom:84.5%;
-  }
-}
-
-@media (min-width:412px) and (max-width:430px){
-  .reason-card-text{
-    zoom:88.5%;
-  }
-}
-
-@media (min-width:431px) and (max-width:640px){
-  .reason-card{
-    padding-left:14px;
-    padding-right:14px;
+  .reason-card-mobile-break{
+    display:none;
   }
 
-  .reason-card-text{
-    zoom:94%;
+  .reason-card h3{
+    font-size:14px;
+    line-height:1.55;
   }
 }
 
@@ -7935,15 +7905,17 @@ inset 0 1px 1px rgba(255,255,255,.85);
   }
 }
 
-/* Smartphone FAQ: keep every question on one line without touching the + icon. */
+/* Smartphone FAQ: reserve icon space and let questions wrap at a readable size. */
 @media (max-width:640px){
   .faq-grid summary{
-    gap:7px;
-    min-height:62px;
-    padding:14px 42px 14px 10px;
-    font-size:13px;
-    line-height:1.2;
-    white-space:nowrap;
+    gap:10px;
+    min-height:76px;
+    padding:16px 48px 16px 12px;
+    font-size:14px;
+    font-weight:700;
+    line-height:1.65;
+    white-space:normal;
+    text-wrap:balance;
   }
 
   .faq-grid summary::before{
@@ -7968,23 +7940,7 @@ inset 0 1px 1px rgba(255,255,255,.85);
   }
 }
 
-@media (max-width:430px){
-  .faq-grid summary{
-    font-size:12px;
-  }
-}
-
-@media (max-width:390px){
-  .faq-grid summary{
-    font-size:11px;
-  }
-}
-
 @media (max-width:374px){
-  .faq-grid summary{
-    font-size:10.2px;
-  }
-
   .contact-copy h2{
     max-width:215px;
   }
@@ -8044,11 +8000,88 @@ inset 0 1px 1px rgba(255,255,255,.85);
   }
 }
 
-/* Smartphone PROCESS: keep every step title on one line */
+/* Smartphone PROCESS: a compact vertical sequence keeps all labels readable. */
 @media (max-width:640px){
+  .flow-panel{
+    padding:8px 18px;
+  }
+
+  .flow-grid{
+    grid-template-columns:1fr;
+  }
+
+  .flow-card{
+    grid-template-columns:28px 38px minmax(0,1fr);
+    justify-items:start;
+    align-items:center;
+    gap:14px;
+    min-height:68px;
+    padding:12px 0;
+    border-radius:0;
+    text-align:left;
+  }
+
+  .flow-card:not(:last-child){
+    border-bottom:1px solid rgba(19,181,170,.14);
+  }
+
+  .flow-card:not(:last-child)::after{
+    display:none;
+  }
+
+  .flow-card span{
+    font-size:12px;
+  }
+
+  .flow-icon{
+    width:38px;
+    height:38px;
+  }
+
+  .flow-icon svg{
+    width:23px;
+    height:23px;
+  }
+
   .flow-card h3{
-    font-size:clamp(7.5px,2.1vw,9.5px);
+    align-self:center;
+    font-size:14px;
+    line-height:1.5;
     white-space:nowrap;
+  }
+
+  .site-header .logo > span:last-child,
+  .site-header .logo small{
+    max-width:none;
+    overflow:visible;
+  }
+
+  .site-header .logo small{
+    margin-top:4px;
+    font-size:10px;
+    line-height:1.5;
+    white-space:normal;
+    text-overflow:clip;
+  }
+
+  .flow-copy p,
+  .reason-heading p,
+  .works-intro p{
+    font-size:12px !important;
+    line-height:1.85;
+    white-space:normal;
+    text-wrap:balance;
+  }
+
+  .flow-copy p br,
+  .reason-heading p br,
+  .works-intro p br{
+    display:none !important;
+  }
+
+  .faq-grid details p{
+    font-size:13px;
+    line-height:1.8;
   }
 }
 
@@ -8057,4 +8090,174 @@ inset 0 1px 1px rgba(255,255,255,.85);
   #contact{
     scroll-margin-top:62px;
   }
+}
+
+/* Tablet typography floors. The desktop scale (1025px and up) is unchanged. */
+@media (min-width:641px) and (max-width:1024px){
+  .header-inner,
+  .site-header.is-scrolled .header-inner{
+    display:grid;
+    grid-template-columns:1fr auto;
+    height:auto;
+    min-height:98px;
+    padding-block:10px;
+    gap:8px 20px;
+  }
+
+  .logo > span:last-child{font-size:16px}
+  .logo small{font-size:11px; line-height:1.5}
+  .logo-mark,
+  .site-header.is-scrolled .logo-mark{width:34px; height:34px; border-radius:10px}
+  .header-tel{grid-column:2; grid-row:1; min-height:42px}
+  .header-tel span{font-size:11px}
+  .header-tel strong{font-size:16px}
+  .global-nav{grid-column:1/-1; grid-row:2; justify-content:center; gap:24px; font-size:12px}
+  .hero{padding-top:140px}
+  .section[id]{scroll-margin-top:110px}
+  .section-kicker{font-size:11px}
+  .hero-lead{font-size:13px; line-height:1.8; white-space:normal}
+  .cost-box em{font-size:11px; line-height:1.8}
+  .hero-actions .btn{font-size:13px; min-height:44px; padding-inline:14px}
+  .hero-points li{font-size:12px; white-space:normal}
+  .stat-label{font-size:12px}
+  .law-content p{font-size:13px; line-height:1.8}
+
+  .problem-intro p,
+  .reason-heading p,
+  .flow-copy p,
+  .cost-info p,
+  .cost-copy p,
+  .works-intro p,
+  .contact-copy p{
+    font-size:13px;
+    line-height:1.85;
+    white-space:normal;
+  }
+
+  .problem-intro p br,
+  .reason-heading p br,
+  .flow-copy p br,
+  .flow-card p br,
+  .works-intro p br{display:none}
+
+  .problem-list li strong{font-size:16px; white-space:normal; line-height:1.6}
+  .problem-list li small{font-size:12px; line-height:1.8; white-space:normal}
+  .problem-list li span{font-size:11px; min-width:26px; min-height:22px}
+  .problem-list li{padding:18px 16px}
+  .solution-card strong{font-size:18px; white-space:normal}
+  .solution-card p{font-size:13px}
+  .solution-card a{font-size:13px; white-space:normal; min-height:44px}
+
+  .reason-grid{grid-template-columns:repeat(2,minmax(0,1fr)); gap:18px}
+  .reason-card{padding:24px; min-height:220px}
+  .reason-card h3{font-size:18px; line-height:1.6}
+  .reason-card p{font-size:13px; line-height:1.85; white-space:normal}
+  .reason-card span{font-size:12px}
+  .reason-cta p{font-size:15px; text-wrap:balance}
+  .reason-cta a{font-size:13px; min-height:44px}
+
+  .flow-card{grid-template-columns:28px 36px minmax(0,1fr); gap:8px 12px; padding:16px 14px}
+  .flow-card span{width:28px; font-size:12px}
+  .flow-icon{width:36px; height:36px}
+  .flow-icon svg{width:22px; height:22px}
+  .flow-card h3{font-size:16px; line-height:1.5; white-space:normal}
+  .flow-card p{font-size:13px; line-height:1.8}
+  .flow-copy a{font-size:13px; white-space:normal}
+
+  .cost-price-card > p,
+  .cost-free-card > p{font-size:14px}
+  .cost-price-card small,
+  .cost-free-card small{font-size:12px; line-height:1.8}
+  .cost-panel .btn{font-size:14px; white-space:normal; min-height:48px}
+  .works-buildings span{font-size:12px; line-height:1.6; min-height:30px}
+  .works-intro .btn{font-size:13px; min-height:44px; padding-inline:16px}
+  .works-stats{grid-template-rows:auto minmax(0,1fr)}
+  .stat-card:not(.area-card){min-height:130px}
+  .area-card small{font-size:13px; line-height:1.8; text-wrap:balance}
+  .stat-card > p,
+  .stat-card > span,
+  .stat-card small{font-size:13px}
+
+  .faq-grid summary{font-size:15px; line-height:1.7; white-space:normal; gap:12px; padding:18px 52px 18px 16px}
+  .faq-grid summary::before{flex:0 0 28px; width:28px; height:28px; font-size:12px}
+  .faq-grid summary::after,
+  .faq-grid details[open] summary::after{right:12px; width:30px; height:30px; font-size:22px; line-height:30px}
+  .faq-grid details p{font-size:13px; line-height:1.8}
+  .contact-copy{align-self:start}
+  .contact-benefits li{font-size:13px; line-height:1.8; padding:10px 16px 10px 36px}
+  .contact-benefits li::before{left:16px; width:7px; height:7px; box-shadow:0 0 0 5px rgba(19,181,170,.1)}
+  .contact-phone-card span{font-size:12px}
+  .form-head span{font-size:16px; min-height:40px; padding-inline:20px}
+  .contact-field,
+  .radio-group p{font-size:14px}
+  .contact-form{gap:18px}
+  .contact-form input,
+  .contact-form select,
+  .contact-form textarea{font-size:16px}
+  .contact-form input,
+  .contact-form select{height:44px}
+  .contact-methods label{min-height:44px; font-size:13px; padding-inline:6px}
+  .privacy-title{font-size:14px}
+  .privacy-scroll{height:140px; font-size:12px; line-height:1.8}
+  .privacy-check{font-size:13px; line-height:1.7}
+  .privacy-check > span{text-wrap:balance}
+  .privacy-check b{flex-shrink:0; white-space:nowrap}
+  .contact-field > span,
+  .radio-group p > span{display:inline-block; white-space:nowrap}
+  .contact-form button{font-size:15px; min-height:48px}
+
+  .footer-inner{grid-template-columns:minmax(0,1fr) 110px 220px; gap:24px 20px}
+  .footer-contact{padding:16px}
+  .footer-contact p{text-wrap:balance}
+  .footer-cta{flex-wrap:wrap; padding:10px; row-gap:2px; line-height:1.5}
+  .footer-logo strong{font-size:17px}
+  .footer-logo small{font-size:11px; line-height:1.6; white-space:normal}
+  .footer-brand p,
+  .footer-nav a,
+  .footer-address,
+  .copyright,
+  .footer-official-text,
+  .footer-official-name,
+  .footer-contact p{font-size:12px; line-height:1.8}
+}
+
+@media (min-width:641px) and (max-width:900px){
+  .form-row{grid-template-columns:1fr; gap:18px}
+}
+
+/* Netlify injects the reCAPTCHA widget when publishing. Keep its native size. */
+.form-verification{
+  display:grid;
+  justify-items:center;
+  gap:10px;
+  min-width:0;
+  text-align:center;
+}
+.form-verification > p{
+  margin:0;
+  font-size:13px;
+  font-weight:600;
+  line-height:1.7;
+  letter-spacing:normal;
+  overflow-wrap:anywhere;
+}
+.form-verification-widget{
+  display:grid;
+  justify-content:center;
+  width:100%;
+  min-width:0;
+  min-height:78px;
+}
+.form-verification-error{
+  width:100%;
+  padding:10px 12px;
+  border:1px solid rgba(220,38,38,.24);
+  border-radius:10px;
+  background:#fef2f2;
+  color:#9f1d1d;
+  scroll-margin-block:110px 120px;
+}
+.form-verification-error:focus-visible{
+  outline:2px solid #9f1d1d;
+  outline-offset:3px;
 }

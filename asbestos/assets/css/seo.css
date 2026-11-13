@@ -2220,6 +2220,7 @@ body.is-search-open { overflow: hidden; }
 .municipality-inline-cta strong { margin-top: 4px; font-size: clamp(15px,1.3vw,22px); }
 .municipality-inline-cta p { margin: 7px 0 0; color: #c8d9e8; font-size: clamp(9px,.68vw,11px); line-height: 1.7; }
 .municipality-inline-cta > a { flex: 0 0 auto; min-width: clamp(210px,16vw,270px); min-height: 48px; display: inline-flex; align-items: center; justify-content: center; padding: 12px 17px; border-radius: 5px; color: #15283c; background: #ffd533; font-size: clamp(10px,.72vw,13px); font-weight: 900; line-height: 1.45; text-align: center; text-decoration: none; }
+.area-inline-cta { margin-top: clamp(28px,3.4vw,54px); }
 .municipality-local-context { display: grid; grid-template-columns: minmax(0,1.35fr) minmax(260px,.65fr); gap: clamp(18px,2.5vw,40px); }
 .municipality-local-context > div,.municipality-local-context > aside { padding: clamp(20px,2.2vw,36px); border: 1px solid #d2e0ea; border-radius: 8px; background: #fff; }
 .municipality-local-context h2 { margin: 7px 0 0; color: #103e68; font-size: clamp(21px,1.8vw,32px); line-height: 1.5; }

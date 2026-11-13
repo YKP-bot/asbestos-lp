@@ -21,6 +21,8 @@
 - [ ] ルート `sitemap.xml` に既存LPと全公開ページが1回ずつ掲載されている（現在435 URL）
 - [ ] `/asbestos/sitemap.xml` にアスベスト領域の全公開ページが1回ずつ掲載されている（現在434 URL）
 - [ ] 各記事の `lastmod` が記事データの `modified` と一致している
+- [ ] 情報トップ・記事一覧・カテゴリ一覧の `lastmod` が配下の最新記事更新日と一致している
+- [ ] 既存LPの `lastmod` が実際の最終更新日と一致している
 - [ ] `sitemap.xml` がUTF-8・絶対URL・Sitemap 0.9名前空間のXMLになっている
 - [ ] `rss.xml` に全コラム、47都道府県ガイド、東京都・神奈川県・埼玉県・千葉県・大阪府・愛知県の309自治体ガイドが掲載されている
 - [ ] title・descriptionがページごとに重複していない
@@ -49,15 +51,19 @@
 - [ ] 愛知県54市町村の住宅形態が表示され、2023年住宅・土地統計調査で非表章の自治体を県平均で補完していない
 - [ ] 画像、CSS、JavaScriptがすべて200で返る
 - [ ] 内部リンクにNetlifyドメインがない
-- [ ] 既存LPは結果受取用 `script.js` の追記以外に、HTML・CSS・PHP・画像・送信先・ルーティングを変更していない
+- [ ] 既存LPのデザイン、H1、画像、canonical、robots、favicon、OGP画像URL、送信先、ルーティングを変更していない
 
 ## 相談導線
 
 - [ ] 情報サイト側にフォームや `send.php` が出力されていない
 - [ ] PC・スマホの相談CTAが既存LPへ移動する
+- [ ] CTAからLPへ送信元ページ・相談テーマ・CTA位置だけが引き継がれ、問い合わせ欄が空の場合だけ補助文が入る
+- [ ] 電話希望では電話、メール希望ではメール、どちらでも可では電話かメールの一方が必須になる
 - [ ] 簡易チェック結果と入力内容のテキストが既存LPの問い合わせ欄へ1回だけ引き継がれる
 - [ ] 写真そのものは既存LPへ引き継がれない
 - [ ] 既存LP側のフォーム送信を別途テスト済み
+- [ ] 同意後に `consultation_cta_view`、`consultation_cta_click`、`consultation_lp_arrival`、`consultation_form_start`、`consultation_submit_success`、`generate_lead` が重複なく発火する
+- [ ] 氏名・電話・メール・住所・問い合わせ本文・写真がURLやアクセス解析へ送信されない
 
 ## 公開作業
 
@@ -67,8 +73,11 @@
 - [ ] `ENVIRONMENT=production`、`OUTPUT_ROOT=release` で `node scripts/build.mjs` が成功
 - [ ] 同じ環境変数で `node scripts/check.mjs` が「検証成功」
 - [ ] 配置前バックアップを取得
+- [ ] NetlifyのProduction branchがこの公開リポジトリの `main` で、手動デプロイや別リポジトリと混在していない
 - [ ] `release/asbestos/` を所定の場所へ配置
 - [ ] `release/sitemap.xml` と `release/robots.txt` をドメイン直下へ配置
+- [ ] 公開リポジトリで `npm run build:seo` と `npm run check` が成功
+- [ ] `asbestos/assets/js/analytics.js` と `asbestos/assets/js/consent-ui.js` がGitの追跡対象で200を返す
 - [ ] 公開した全HTMLで `noindex` がなく、robots が `index, follow` になっている
 - [ ] レスポンスヘッダーに `X-Robots-Tag: noindex` がない
 - [ ] `https://lp.sakuraigr.co.jp/robots.txt` が `Allow: /` でルートサイトマップを参照している
@@ -76,6 +85,7 @@
 - [ ] `https://lp.sakuraigr.co.jp/asbestos/sitemap.xml` が表示でき、アスベスト領域の全434 URLを含んでいる
 - [ ] `/asbestos/assets/ai/` 配下のモデル・ランタイムが200で返り、画像AIが予備判定へフォールバックしていない
 - [ ] `https://lp.sakuraigr.co.jp/asbestos/rss.xml` が表示でき、421件（コラム65本＋都道府県47件＋6都府県の自治体309件）を含んでいる
+- [ ] 愛知県54自治体の代表URL（例：`/asbestos/area/aichi/nagoya/`）が404ではなく200を返す
 - [ ] 公開後にPC・タブレット・スマホで主要ページを確認
 - [ ] Search Consoleで `https://lp.sakuraigr.co.jp/sitemap.xml` を送信
 - [ ] Search ConsoleのURL検査で `/asbestos/` をライブテストし、インデックス登録をリクエスト
