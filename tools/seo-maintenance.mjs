@@ -5,6 +5,7 @@ import { fileURLToPath } from 'node:url';
 const SCRIPT_DIR = dirname(fileURLToPath(import.meta.url));
 const ROOT = resolve(SCRIPT_DIR, '..');
 const ORIGIN = 'https://lp.sakuraigr.co.jp';
+const SITE_NAME = 'アスベスト調査ナビ';
 const WRITE = process.argv.includes('--write');
 const CHECK = process.argv.includes('--check');
 
@@ -71,6 +72,14 @@ function schemaType(value) {
   return Array.isArray(type) ? type : [type].filter(Boolean);
 }
 
+function websiteSchemas(value) {
+  if (!value || typeof value !== 'object') return [];
+  return [
+    ...(schemaType(value).includes('WebSite') ? [value] : []),
+    ...Object.values(value).flatMap(websiteSchemas),
+  ];
+}
+
 function classification(route) {
   if (route.startsWith('/asbestos/area/')) return 'area';
   if (/^\/asbestos\/column\/[^/]+\/$/.test(route)
@@ -107,11 +116,15 @@ for (const file of htmlFiles) {
   const title = match(html, /<title>([\s\S]*?)<\/title>/i);
   const description = match(html, /<meta\s+name=["']description["']\s+content=["']([^"']*)["'][^>]*>/i);
   const ogUrl = match(html, /<meta\s+property=["']og:url["']\s+content=["']([^"']+)["'][^>]*>/i);
+  const siteNames = [...html.matchAll(/<meta\s+property=["']og:site_name["']\s+content=["']([^"']*)["'][^>]*>/gi)];
   const expectedCanonical = `${ORIGIN}${route}`;
   const local = relative(ROOT, file).split(sep).join('/');
 
   if (!title) errors.push(`${local}: title is missing`);
   if (!description) errors.push(`${local}: meta description is missing`);
+  if (siteNames.length !== 1 || decodeHtml(siteNames[0]?.[1] || '') !== SITE_NAME) {
+    errors.push(`${local}: og:site_name must be ${SITE_NAME}`);
+  }
   if (canonical !== expectedCanonical) errors.push(`${local}: canonical must be ${expectedCanonical}`);
   if (ogUrl && ogUrl !== expectedCanonical) errors.push(`${local}: og:url differs from canonical`);
   if (robots.includes('noindex')) {
@@ -123,6 +136,13 @@ for (const file of htmlFiles) {
   const schemas = parseJsonLd(html);
   const invalidSchemaCount = [...html.matchAll(/<script\s+type=["']application\/ld\+json["'][^>]*>/gi)].length - schemas.length;
   if (invalidSchemaCount) errors.push(`${local}: invalid JSON-LD (${invalidSchemaCount})`);
+  const websites = schemas.flatMap(websiteSchemas);
+  if (route === '/' && websites.length !== 1) errors.push(`${local}: homepage must define exactly one WebSite`);
+  for (const website of websites) {
+    if (website.name !== SITE_NAME || website.url !== `${ORIGIN}/` || website['@id'] !== `${ORIGIN}/#website`) {
+      errors.push(`${local}: WebSite must use the shared root URL and site name`);
+    }
+  }
   const article = schemas.find((item) => schemaType(item).some((type) => ['Article', 'BlogPosting', 'NewsArticle'].includes(type)));
   const schemaModified = typeof article?.dateModified === 'string' ? article.dateModified.slice(0, 10) : '';
   const lastmod = lastmodOverrides[canonical] || schemaModified || previousLastmods.get(canonical) || new Date().toISOString().slice(0, 10);
